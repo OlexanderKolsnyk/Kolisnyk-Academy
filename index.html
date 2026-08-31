@@ -13,53 +13,66 @@
     <!-- Підключення іконок FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <!-- Бібліотека для конфеті -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
     <style>
-        /* === CSS ЗМІННІ (ДИЗАЙН СИСТЕМА) === */
+        /* === CSS ЗМІННІ (СВІТЛА ТЕМА ЗА ЗАМОВЧУВАННЯМ) === */
         :root {
-            --bg-color: #FDF7F4; /* Ніжний персиковий */
-            --accent-color: #ff9e80; /* Новий головний колір */
-            --accent-hover: #e88768; /* Колір при наведенні */
+            --bg-color: #FDF7F4; 
+            --accent-color: #ff9e80; 
+            --accent-hover: #e88768; 
             --card-bg: rgba(255, 255, 255, 0.9);
-            --text-dark: #3a221a; /* Темно-коричневий для ідеального контрасту з ff9e80 */
+            --text-dark: #3a221a; 
             --text-gray: #7a6862;
+            --border-color: #f0e6e2;
             --border-radius: 16px;
             --shadow: 0 10px 30px rgba(255, 158, 128, 0.15);
             --transition: all 0.3s ease;
+            
+            /* Патерн світлий */
+            --bg-pattern: url("data:image/svg+xml,%3Csvg width='60' height='103.9' viewBox='0 0 60 103.9' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 103.9L0 86.6V51.9L30 34.6L60 51.9V86.6L30 103.9ZM30 101.9L58.2 85.5V52.9L30 36.6L1.8 52.9V85.5L30 101.9ZM15 77.9L0 69.3V34.6L15 26L30 34.6V69.3L15 77.9ZM15 75.9L28.2 68.3V35.6L15 28L1.8 35.6V68.3L15 75.9ZM45 77.9L30 69.3V34.6L45 26L60 34.6V69.3L45 77.9ZM45 75.9L58.2 68.3V35.6L45 28L31.8 35.6V68.3L45 75.9ZM15 26L0 17.3V-17.3L15 -26L30 -17.3V17.3L15 26ZM15 24L28.2 16.3V-16.3L15 -24L1.8 -16.3V16.3L15 24ZM45 26L30 17.3V-17.3L45 -26L60 -17.3V17.3L45 26ZM45 24L58.2 16.3V-16.3L45 -24L31.8 -16.3V16.3L45 24Z' fill='%23ff9e80' fill-opacity='0.15'/%3E%3C/svg%3E");
+        }
+
+        /* === ТЕМНА ТЕМА === */
+        [data-theme="dark"] {
+            --bg-color: #1a1412; 
+            --card-bg: rgba(40, 30, 26, 0.9);
+            --text-dark: #fdf7f4; 
+            --text-gray: #b8aba6;
+            --border-color: #3a2a26;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            --bg-pattern: url("data:image/svg+xml,%3Csvg width='60' height='103.9' viewBox='0 0 60 103.9' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 103.9L0 86.6V51.9L30 34.6L60 51.9V86.6L30 103.9ZM30 101.9L58.2 85.5V52.9L30 36.6L1.8 52.9V85.5L30 101.9ZM15 77.9L0 69.3V34.6L15 26L30 34.6V69.3L15 77.9ZM15 75.9L28.2 68.3V35.6L15 28L1.8 35.6V68.3L15 75.9ZM45 77.9L30 69.3V34.6L45 26L60 34.6V69.3L45 77.9ZM45 75.9L58.2 68.3V35.6L45 28L31.8 35.6V68.3L45 75.9ZM15 26L0 17.3V-17.3L15 -26L30 -17.3V17.3L15 26ZM15 24L28.2 16.3V-16.3L15 -24L1.8 -16.3V16.3L15 24ZM45 26L30 17.3V-17.3L45 -26L60 -17.3V17.3L45 26ZM45 24L58.2 16.3V-16.3L45 -24L31.8 -16.3V16.3L45 24Z' fill='%23ff9e80' fill-opacity='0.05'/%3E%3C/svg%3E");
         }
 
         /* === БАЗОВІ СТИЛІ === */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             font-family: 'Nunito', sans-serif;
             background-color: var(--bg-color);
-            /* Патерн гексагонів через SVG data-uri (оновлено під ff9e80) */
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='103.9' viewBox='0 0 60 103.9' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 103.9L0 86.6V51.9L30 34.6L60 51.9V86.6L30 103.9ZM30 101.9L58.2 85.5V52.9L30 36.6L1.8 52.9V85.5L30 101.9ZM15 77.9L0 69.3V34.6L15 26L30 34.6V69.3L15 77.9ZM15 75.9L28.2 68.3V35.6L15 28L1.8 35.6V68.3L15 75.9ZM45 77.9L30 69.3V34.6L45 26L60 34.6V69.3L45 77.9ZM45 75.9L58.2 68.3V35.6L45 28L31.8 35.6V68.3L45 75.9ZM15 26L0 17.3V-17.3L15 -26L30 -17.3V17.3L15 26ZM15 24L28.2 16.3V-16.3L15 -24L1.8 -16.3V16.3L15 24ZM45 26L30 17.3V-17.3L45 -26L60 -17.3V17.3L45 26ZM45 24L58.2 16.3V-16.3L45 -24L31.8 -16.3V16.3L45 24Z' fill='%23ff9e80' fill-opacity='0.15'/%3E%3C/svg%3E");
+            background-image: var(--bg-pattern);
             color: var(--text-dark);
             line-height: 1.6;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            transition: background-color 0.3s, color 0.3s;
         }
 
-        /* Універсальний клас для карток */
         .card {
             background: var(--card-bg);
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
             padding: 2rem;
             backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         /* === HEADER === */
         header {
             background-color: var(--accent-color);
-            color: var(--text-dark);
+            color: #3a221a;
             padding: 1rem 5%;
             display: flex;
             justify-content: space-between;
@@ -70,102 +83,63 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
-        .logo-container {
+        .logo-container { display: flex; align-items: center; gap: 1rem; cursor: pointer; }
+        .logo-circle { width: 40px; height: 40px; background-color: #3a221a; color: var(--accent-color); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: 800; font-size: 1.1rem; }
+        .brand-name { font-weight: 700; font-size: 1.25rem; }
+
+        .header-actions {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            cursor: pointer;
+            gap: 1.5rem;
         }
 
-        .logo-circle {
-            width: 40px;
-            height: 40px;
-            background-color: var(--text-dark);
-            color: var(--accent-color);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: 800;
-            font-size: 1.1rem;
-            letter-spacing: -1px;
-        }
+        .social-icons { display: flex; gap: 1.25rem; }
+        .social-icons a { color: #3a221a; font-size: 1.3rem; transition: var(--transition); }
+        .social-icons a:hover { transform: translateY(-3px); color: white; }
 
-        .brand-name {
-            font-weight: 700;
-            font-size: 1.25rem;
-        }
-
-        .social-icons {
-            display: flex;
-            gap: 1.25rem;
-        }
-
-        .social-icons a {
-            color: var(--text-dark);
-            font-size: 1.3rem;
+        /* Кнопка теми */
+        .theme-btn {
+            background: none; border: none; cursor: pointer;
+            font-size: 1.3rem; color: #3a221a;
             transition: var(--transition);
         }
-
-        .social-icons a:hover {
-            transform: translateY(-3px);
-            color: white;
-        }
+        .theme-btn:hover { transform: scale(1.1); color: white; }
 
         /* === MAIN CONTENT === */
         main {
-            flex: 1;
-            width: 100%;
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 3rem 5%;
-            display: flex;
-            flex-direction: column;
-            gap: 3rem;
+            flex: 1; width: 100%; max-width: 1100px;
+            margin: 0 auto; padding: 3rem 5%;
+            display: flex; flex-direction: column; gap: 3rem;
         }
 
-        /* Головний заголовок */
         .main-title {
-            text-align: center;
-            color: var(--accent-color);
+            text-align: center; color: var(--accent-color);
             font-size: clamp(2rem, 5vw, 3.5rem);
-            font-weight: 800;
-            letter-spacing: 1px;
-            text-transform: uppercase;
+            font-weight: 800; text-transform: uppercase;
         }
 
-        /* Блок вводу (Voice/Text) */
-        .input-block {
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-            padding: 3rem 2rem;
+        /* Блок вводу */
+        .input-block { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 1rem; padding: 3rem 2rem; position: relative; }
+        
+        /* Візуалізатор звуку */
+        #audio-visualizer {
+            display: none;
+            width: 150px; height: 50px;
+            margin-bottom: 1rem;
         }
 
         .mic-btn-large {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background-color: var(--accent-color);
-            color: var(--text-dark);
-            border: none;
-            font-size: 2.5rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0 auto 1rem;
-            cursor: pointer;
+            width: 80px; height: 80px; border-radius: 50%;
+            background-color: var(--accent-color); color: #3a221a;
+            border: none; font-size: 2.5rem;
+            display: flex; justify-content: center; align-items: center;
+            margin: 0 auto 1rem; cursor: pointer;
             box-shadow: 0 8px 25px rgba(26, 54, 38, 0.3);
             transition: var(--transition);
             animation: pulse 2s infinite;
         }
-
-        .mic-btn-large:hover {
-            transform: scale(1.05);
-            background-color: var(--accent-hover);
-        }
+        .mic-btn-large:hover { transform: scale(1.05); background-color: var(--accent-hover); }
+        .mic-btn-large.recording { animation: none; background-color: #ff4757; color: white; box-shadow: 0 0 0 10px rgba(255, 71, 87, 0.3); }
 
         @keyframes pulse {
             0% { box-shadow: 0 0 0 0 rgba(255, 158, 128, 0.6); }
@@ -173,351 +147,99 @@
             100% { box-shadow: 0 0 0 0 rgba(255, 158, 128, 0); }
         }
 
-        .input-block h2 {
-            font-size: 1.5rem;
-            color: var(--accent-color);
-            margin-bottom: 0.5rem;
-        }
+        .input-block h2 { font-size: 1.5rem; color: var(--accent-color); margin-bottom: 0.5rem; }
+        .input-block p { color: var(--text-gray); margin-bottom: 2rem; }
 
-        .input-block p {
-            color: var(--text-gray);
-            margin-bottom: 2rem;
-        }
+        .toggle-container { display: flex; align-items: center; gap: 1.5rem; background: var(--border-color); padding: 0.5rem 1.5rem; border-radius: 30px; }
+        .toggle-buttons { display: flex; gap: 0.5rem; }
+        .toggle-btn { background: transparent; border: 2px solid transparent; color: var(--text-gray); width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 1.1rem; transition: var(--transition); }
+        .toggle-btn.active { background: var(--bg-color); color: var(--accent-color); box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
+        .toggle-label { font-weight: 600; color: var(--accent-color); }
 
-        .toggle-container {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            background: rgba(26, 54, 38, 0.05);
-            padding: 0.5rem 1.5rem;
-            border-radius: 30px;
-        }
-
-        .toggle-buttons {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .toggle-btn {
-            background: transparent;
-            border: 2px solid transparent;
-            color: var(--text-gray);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1.1rem;
-            transition: var(--transition);
-        }
-
-        .toggle-btn.active {
-            background: white;
-            color: var(--accent-color);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-        }
-
-        .toggle-label {
-            font-weight: 600;
-            color: var(--accent-color);
-        }
-
-        /* Поле для текстового вводу (приховане за замовчуванням) */
-        .text-input-area {
-            width: 100%;
-            max-width: 500px;
-            display: none;
-            margin-bottom: 1rem;
-            animation: fadeIn 0.3s ease;
-        }
-
+        .text-input-area { width: 100%; max-width: 500px; display: none; margin-bottom: 1rem; animation: fadeIn 0.3s ease; }
         .text-input-area textarea {
-            width: 100%;
-            padding: 1rem;
-            border: 2px solid #f0e6e2;
-            border-radius: 12px;
-            font-family: inherit;
-            font-size: 1rem;
-            min-height: 120px;
-            resize: vertical;
-            color: var(--text-dark);
+            width: 100%; padding: 1rem;
+            border: 2px solid var(--border-color); border-radius: 12px;
+            font-family: inherit; font-size: 1rem; min-height: 120px;
+            resize: vertical; color: var(--text-dark); background: var(--bg-color);
         }
+        .text-input-area textarea:focus { outline: none; border-color: var(--accent-color); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* === НИЖНЯ СЕКЦІЯ === */
+        .bottom-section { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+        .section-title { color: var(--accent-color); font-size: 1.25rem; margin-bottom: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.75rem; }
+        .settings-list { display: flex; flex-direction: column; gap: 1.5rem; }
         
-        .text-input-area textarea:focus {
-            outline: none;
-            border-color: var(--accent-color);
-        }
+        .setting-item { display: flex; align-items: center; gap: 1rem; position: relative; }
+        .setting-label { width: 140px; display: flex; align-items: center; gap: 0.75rem; font-weight: 600; color: var(--text-dark); font-size: 0.95rem; }
+        .setting-label i { color: var(--accent-color); width: 20px; text-align: center; }
+        
+        /* Емодзі індикатор */
+        .emoji-indicator { font-size: 1.25rem; min-width: 30px; text-align: center; }
 
-        .mic-btn-large.recording {
-            animation: none;
-            background-color: #ff4757;
-            box-shadow: 0 0 0 10px rgba(255, 71, 87, 0.3);
-        }
+        input[type=range] { -webkit-appearance: none; flex: 1; background: transparent; cursor: pointer; }
+        input[type=range]:focus { outline: none; }
+        input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 6px; background: var(--border-color); border-radius: 10px; }
+        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 20px; width: 20px; border-radius: 50%; background: var(--text-dark); margin-top: -7px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); transition: transform 0.1s; }
+        input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+        input[type=range] { accent-color: var(--accent-color); }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* === НИЖНЯ СЕКЦІЯ (GRID) === */
-        .bottom-section {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-        }
-
-        .section-title {
-            color: var(--accent-color);
-            font-size: 1.25rem;
-            margin-bottom: 1.5rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        /* Картка 1: Налаштування репетитора */
-        .settings-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .setting-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .setting-label {
-            width: 140px;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            font-weight: 600;
-            color: var(--text-dark);
-            font-size: 0.95rem;
-        }
-
-        .setting-label i {
-            color: var(--accent-color);
-            width: 20px;
-            text-align: center;
-        }
-
-        /* Кастомний повзунок (Range Input) */
-        input[type=range] {
-            -webkit-appearance: none;
-            flex: 1;
-            background: transparent;
-            cursor: pointer;
-        }
-
-        input[type=range]:focus {
-            outline: none;
-        }
-
-        /* Track (Доріжка) */
-        input[type=range]::-webkit-slider-runnable-track {
-            width: 100%;
-            height: 6px;
-            background: #d8e3dc;
-            border-radius: 10px;
-        }
-
-        /* Thumb (Повзунок) */
-        input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            height: 20px;
-            width: 20px;
-            border-radius: 50%;
-            background: var(--text-dark);
-            margin-top: -7px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            transition: transform 0.1s;
-        }
-
-        input[type=range]::-webkit-slider-thumb:hover {
-            transform: scale(1.15);
-        }
-
-        /* Додавання кольору заповнення для сучасних браузерів */
-        input[type=range] {
-            accent-color: var(--accent-color);
-        }
-
-        /* Картка 2: Форма контактів */
-        .form-group {
-            margin-bottom: 1.25rem;
-        }
-
-        .input-wrapper {
-            position: relative;
-            width: 100%;
-            display: flex;
-            align-items: center;
-        }
-
-        .input-icon {
-            position: absolute;
-            left: 1.25rem;
-            color: var(--text-gray);
-        }
-
-        .custom-input {
-            width: 100%;
-            padding: 0.85rem 1rem 0.85rem 3rem;
-            border: 2px solid #f0e6e2;
-            border-radius: 12px;
-            font-family: inherit;
-            font-size: 1rem;
-            color: var(--text-dark);
-            transition: var(--transition);
-            background: white;
-        }
-
-        .custom-input:focus {
-            outline: none;
-            border-color: var(--accent-color);
-            box-shadow: 0 0 0 4px rgba(255, 158, 128, 0.15);
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 1rem;
-            background-color: var(--accent-color);
-            color: var(--text-dark);
-            border: none;
-            border-radius: 12px;
-            font-size: 1.1rem;
-            font-weight: 800;
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 0.5rem;
-            margin-top: 1.5rem;
-        }
-
-        .submit-btn:hover {
-            background-color: var(--accent-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(255, 158, 128, 0.3);
-        }
+        .form-group { margin-bottom: 1.25rem; }
+        .input-wrapper { position: relative; width: 100%; display: flex; align-items: center; }
+        .input-icon { position: absolute; left: 1.25rem; color: var(--text-gray); }
+        .custom-input { width: 100%; padding: 0.85rem 1rem 0.85rem 3rem; border: 2px solid var(--border-color); border-radius: 12px; font-family: inherit; font-size: 1rem; color: var(--text-dark); background: var(--bg-color); transition: var(--transition); }
+        .custom-input:focus { outline: none; border-color: var(--accent-color); }
+        
+        .submit-btn { width: 100%; padding: 1rem; background-color: var(--accent-color); color: #3a221a; border: none; border-radius: 12px; font-size: 1.1rem; font-weight: 800; cursor: pointer; transition: var(--transition); display: flex; justify-content: center; align-items: center; gap: 0.5rem; margin-top: 1.5rem; }
+        .submit-btn:hover { background-color: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(255, 158, 128, 0.3); }
 
         /* === МОДАЛЬНЕ ВІКНО === */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); display: flex; justify-content: center; align-items: center; z-index: 1000; opacity: 0; visibility: hidden; transition: all 0.3s ease; backdrop-filter: blur(3px); }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        .modal-content { background: var(--card-bg); padding: 2.5rem; border-radius: var(--border-radius); box-shadow: var(--shadow); text-align: center; max-width: 400px; width: 90%; transform: translateY(20px); transition: all 0.3s ease; border: 1px solid var(--border-color); }
+        .modal-overlay.active .modal-content { transform: translateY(0); }
+        .modal-icon { font-size: 3rem; color: var(--accent-color); margin-bottom: 1rem; }
+        .modal-title { color: var(--text-dark); margin-bottom: 0.5rem; font-size: 1.5rem; }
+        .modal-text { color: var(--text-gray); margin-bottom: 1.5rem; }
+        .modal-close-btn { padding: 0.75rem 1.5rem; background-color: var(--text-dark); color: var(--bg-color); border: none; border-radius: 8px; font-weight: 700; cursor: pointer; transition: var(--transition); }
+        .modal-close-btn:hover { background-color: var(--accent-color); }
 
-        .modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .modal-content {
-            background: var(--card-bg);
-            padding: 2.5rem;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            text-align: center;
-            max-width: 400px;
-            width: 90%;
-            transform: translateY(20px);
-            transition: all 0.3s ease;
-        }
-
-        .modal-overlay.active .modal-content {
-            transform: translateY(0);
-        }
-
-        .modal-icon {
-            font-size: 3rem;
-            color: var(--accent-color);
-            margin-bottom: 1rem;
-        }
-
-        .modal-title {
-            color: var(--text-dark);
-            margin-bottom: 0.5rem;
-            font-size: 1.5rem;
-        }
-
-        .modal-text {
-            color: var(--text-gray);
-            margin-bottom: 1.5rem;
-        }
-
-        .modal-close-btn {
-            padding: 0.75rem 1.5rem;
-            background-color: var(--text-dark);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .modal-close-btn:hover {
-            background-color: var(--accent-color);
-        }
-
-        /* === АДАПТИВНІСТЬ (RESPONSIVE) === */
         @media (max-width: 768px) {
-            .bottom-section {
-                grid-template-columns: 1fr; /* Один стовпець на мобільних */
-            }
-
-            .main-title {
-                font-size: 2.2rem;
-            }
-
-            .setting-item {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.5rem;
-            }
-
-            .setting-label {
-                width: 100%;
-            }
+            .bottom-section { grid-template-columns: 1fr; }
+            .setting-item { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+            .setting-label { width: 100%; }
+            .emoji-indicator { position: absolute; right: 0; top: 0; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ВЕРХНЯ ПАНЕЛЬ -->
     <header>
         <div class="logo-container">
             <div class="logo-circle">KA</div>
             <span class="brand-name">Kolisnyk Academy</span>
         </div>
-        <div class="social-icons">
-            <a href="https://www.tiktok.com/@kolisnyk_academy?_r=1&_t=ZS-99LjRRCRJ83" target="_blank" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
-            <a href="https://www.instagram.com/kolisnyk_academy?igsi=Mmttb2JicnNpc3Zn" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-            <a href="https://t.me/kolisnyk_academy" target="_blank" aria-label="Telegram"><i class="fa-brands fa-telegram"></i></a>
+        <div class="header-actions">
+            <div class="social-icons">
+                <a href="https://www.tiktok.com/@kolisnyk_academy?_r=1&_t=ZS-99LjRRCRJ83" target="_blank" data-social="tiktok" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+                <a href="https://www.instagram.com/kolisnyk_academy?igsi=Mmttb2JicnNpc3Zn" target="_blank" data-social="instagram" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://t.me/kolisnyk_academy" target="_blank" data-social="telegram" aria-label="Telegram"><i class="fa-brands fa-telegram"></i></a>
+            </div>
+            <!-- Кнопка зміни теми -->
+            <button class="theme-btn" id="theme-toggle" aria-label="Змінити тему">
+                <i class="fa-solid fa-moon"></i>
+            </button>
         </div>
     </header>
 
     <main>
-        <!-- ГОЛОВНИЙ ЗАГОЛОВОК -->
         <h1 class="main-title">Репетитор в 1 клік!</h1>
 
-        <!-- БЛОК ВВОДУ -->
         <section class="card input-block">
+            <!-- Візуалізатор звуку (Canvas) -->
+            <canvas id="audio-visualizer"></canvas>
+
             <button class="mic-btn-large" id="mic-btn" aria-label="Почати запис">
                 <i class="fa-solid fa-microphone"></i>
             </button>
@@ -538,10 +260,7 @@
             </div>
         </section>
 
-        <!-- НИЖНЯ СЕКЦІЯ (Дві картки) -->
         <section class="bottom-section">
-            
-            <!-- КАРТКА 1: Налаштування -->
             <div class="card settings-card">
                 <h3 class="section-title"><i class="fa-solid fa-sliders"></i> Налаштування репетитора</h3>
                 
@@ -549,23 +268,26 @@
                     <div class="setting-item">
                         <div class="setting-label"><i class="fa-solid fa-gauge-high"></i> Темп</div>
                         <input type="range" id="slider-pace" min="1" max="100" value="50">
+                        <span class="emoji-indicator" id="emoji-pace">🚶</span>
                     </div>
                     <div class="setting-item">
                         <div class="setting-label"><i class="fa-regular fa-face-smile"></i> Дружелюбність</div>
                         <input type="range" id="slider-friendliness" min="1" max="100" value="80">
+                        <span class="emoji-indicator" id="emoji-friendliness">😊</span>
                     </div>
                     <div class="setting-item">
                         <div class="setting-label"><i class="fa-solid fa-graduation-cap"></i> Академічність</div>
                         <input type="range" id="slider-academic" min="1" max="100" value="60">
+                        <span class="emoji-indicator" id="emoji-academic">📚</span>
                     </div>
                     <div class="setting-item">
                         <div class="setting-label"><i class="fa-solid fa-list-check"></i> Контроль</div>
                         <input type="range" id="slider-control" min="1" max="100" value="40">
+                        <span class="emoji-indicator" id="emoji-control">👀</span>
                     </div>
                 </div>
             </div>
 
-            <!-- КАРТКА 2: Оплата -->
             <div class="card payment-card">
                 <h3 class="section-title"><i class="fa-regular fa-address-card"></i> Ваші дані</h3>
                 
@@ -584,16 +306,14 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="submit-btn">
+                    <button type="submit" class="submit-btn" id="submit-btn">
                         Надіслати <i class="fa-solid fa-arrow-right"></i>
                     </button>
                 </form>
             </div>
-
         </section>
     </main>
 
-    <!-- МОДАЛЬНЕ ВІКНО (ОНОВЛЕНО ТЕКСТ) -->
     <div class="modal-overlay" id="success-modal">
         <div class="modal-content">
             <i class="fa-regular fa-circle-check modal-icon"></i>
@@ -603,14 +323,172 @@
         </div>
     </div>
 
-    <!-- Скрипти для інтерактивності -->
     <script>
-        // === НАЛАШТУВАННЯ GOOGLE SHEETS ===
-        // УВАГА: Замініть 'ВАШ_URL_ТУТ' на посилання, яке ви отримали в Google Apps Script!
-        // Воно має виглядати приблизно так: 'https://script.google.com/macros/s/AKfycb.../exec'
+        // === URL ВАШОГО GOOGLE APPS SCRIPT ===
         const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw4sVRam4j1jR6TAq7AgqKHczS7NFXvvdI6iFjin1Pu0gS0E5HSGZ_4VHiGMeetojlIUA/exec'; 
 
-        // === ЕЛЕМЕНТИ UI ===
+        // === 1. ТЕМНА ТЕМА ===
+        const themeBtn = document.getElementById('theme-toggle');
+        const icon = themeBtn.querySelector('i');
+        const currentTheme = localStorage.getItem('theme');
+
+        if (currentTheme === 'dark') {
+            document.body.setAttribute('data-theme', 'dark');
+            icon.classList.replace('fa-moon', 'fa-sun');
+        }
+
+        themeBtn.addEventListener('click', () => {
+            if (document.body.getAttribute('data-theme') === 'dark') {
+                document.body.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+                icon.classList.replace('fa-sun', 'fa-moon');
+            } else {
+                document.body.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                icon.classList.replace('fa-moon', 'fa-sun');
+            }
+        });
+
+        // === 2. ВІЗУАЛІЗАЦІЯ ПОВЗУНКІВ (ЕМОДЗІ) ===
+        const sliders = {
+            'slider-pace': { emojiId: 'emoji-pace', stops: [ {val: 33, em: '🐢'}, {val: 66, em: '🚶'}, {val: 101, em: '🚀'} ] },
+            'slider-friendliness': { emojiId: 'emoji-friendliness', stops: [ {val: 33, em: '😐'}, {val: 66, em: '🙂'}, {val: 101, em: '🤗'} ] },
+            'slider-academic': { emojiId: 'emoji-academic', stops: [ {val: 33, em: '🎮'}, {val: 66, em: '📖'}, {val: 101, em: '🎓'} ] },
+            'slider-control': { emojiId: 'emoji-control', stops: [ {val: 33, em: '🕊️'}, {val: 66, em: '👀'}, {val: 101, em: '👮'} ] }
+        };
+
+        function updateEmoji(sliderId) {
+            const val = document.getElementById(sliderId).value;
+            const config = sliders[sliderId];
+            const emojiEl = document.getElementById(config.emojiId);
+            for (let stop of config.stops) {
+                if (val < stop.val) { emojiEl.textContent = stop.em; break; }
+            }
+        }
+
+        Object.keys(sliders).forEach(id => {
+            const slider = document.getElementById(id);
+            slider.addEventListener('input', () => { updateEmoji(id); saveData(); });
+        });
+
+        // === 3. ЗБЕРЕЖЕННЯ ДАНИХ (LocalStorage) ===
+        const inputsToSave = ['user-message', 'slider-pace', 'slider-friendliness', 'slider-academic', 'slider-control', 'user-name', 'user-contact'];
+        
+        function saveData() {
+            inputsToSave.forEach(id => localStorage.setItem(id, document.getElementById(id).value));
+        }
+
+        function loadData() {
+            inputsToSave.forEach(id => {
+                const val = localStorage.getItem(id);
+                if (val !== null) document.getElementById(id).value = val;
+            });
+            Object.keys(sliders).forEach(id => updateEmoji(id)); // Оновити емодзі після завантаження
+        }
+
+        document.getElementById('contact-form').addEventListener('input', saveData);
+        document.getElementById('user-message').addEventListener('input', saveData);
+        window.addEventListener('DOMContentLoaded', loadData);
+
+        // === 4. АНАЛІТИКА ТА ВІДСТЕЖЕННЯ ===
+        let userInteracted = false;
+        let formSubmitted = false;
+        
+        // Отримання UTM міток з URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const utmSource = urlParams.get('utm_source') || 'direct';
+        const utmMedium = urlParams.get('utm_medium') || 'none';
+        const utmCampaign = urlParams.get('utm_campaign') || 'none';
+
+        // Функція відправки аналітики
+        function trackEvent(eventName, eventDetails = '') {
+            const data = {
+                type: 'analytics', // Вказуємо скрипту, що це статистика, а не заявка
+                event: eventName,
+                details: eventDetails,
+                utm_source: utmSource,
+                utm_medium: utmMedium,
+                timestamp: new Date().toLocaleString('uk-UA')
+            };
+            
+            // Використовуємо fetch з keepalive для гарантованої відправки при закритті вкладки
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                keepalive: true,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+        }
+
+        // Відстеження активності користувача
+        document.body.addEventListener('click', () => userInteracted = true, { once: true });
+        document.body.addEventListener('input', () => userInteracted = true, { once: true });
+
+        // Трекінг кліків по соцмережах
+        document.querySelectorAll('[data-social]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                trackEvent('Social Click', link.getAttribute('data-social'));
+            });
+        });
+
+        // Відстеження "кинутого кошика" (зайшов, щось ввів, але не натиснув Надіслати)
+        window.addEventListener('beforeunload', () => {
+            if (userInteracted && !formSubmitted) {
+                trackEvent('Bounce', 'Не відправив форму');
+            }
+        });
+
+        // Запис "просто візиту" при завантаженні (з UTM)
+        window.addEventListener('load', () => { trackEvent('Page View', 'Візит'); });
+
+        // === 5. ВІЗУАЛІЗАТОР ЗВУКУ (Audio Visualizer) ===
+        const canvas = document.getElementById('audio-visualizer');
+        const canvasCtx = canvas.getContext('2d');
+        let audioContext;
+        let analyser;
+        let source;
+        let animationId;
+
+        function startVisualizer(stream) {
+            canvas.style.display = 'block';
+            if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            if (audioContext.state === 'suspended') audioContext.resume();
+            
+            analyser = audioContext.createAnalyser();
+            analyser.fftSize = 64; // Розмір блоків для візуалізації
+            source = audioContext.createMediaStreamSource(stream);
+            source.connect(analyser);
+
+            const bufferLength = analyser.frequencyBinCount;
+            const dataArray = new Uint8Array(bufferLength);
+
+            function draw() {
+                animationId = requestAnimationFrame(draw);
+                analyser.getByteFrequencyData(dataArray);
+
+                canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
+                const barWidth = (canvas.width / bufferLength) * 2.5;
+                let barHeight;
+                let x = 0;
+
+                for(let i = 0; i < bufferLength; i++) {
+                    barHeight = dataArray[i] / 2; // Масштабування
+                    canvasCtx.fillStyle = `rgb(255, ${158 - (barHeight/2)}, 128)`;
+                    canvasCtx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
+                    x += barWidth + 2;
+                }
+            }
+            draw();
+        }
+
+        function stopVisualizer() {
+            if (animationId) cancelAnimationFrame(animationId);
+            canvas.style.display = 'none';
+            if (source) source.disconnect();
+        }
+
+        // === МІКРОФОН ТА РЕЖИМИ ===
         const btnVoice = document.getElementById('btn-voice');
         const btnText = document.getElementById('btn-text');
         const micBtn = document.getElementById('mic-btn');
@@ -619,90 +497,85 @@
         const statusTitle = document.getElementById('input-status-title');
         const statusDesc = document.getElementById('input-status-desc');
         
-        let inputMode = 'voice'; // 'voice' або 'text'
-
-        // === АНІМАЦІЯ ПЕРЕМИКАЧІВ ТА ЗМІНА РЕЖИМУ ===
         btnVoice.addEventListener('click', () => {
-            btnVoice.classList.add('active');
-            btnText.classList.remove('active');
-            micBtn.style.display = 'flex';
-            textAreaContainer.style.display = 'none';
+            btnVoice.classList.add('active'); btnText.classList.remove('active');
+            micBtn.style.display = 'flex'; textAreaContainer.style.display = 'none';
             statusTitle.textContent = 'Натисніть, щоб почати запис войсу';
             statusDesc.textContent = 'Голос буде автоматично переведено в текст';
-            inputMode = 'voice';
         });
 
         btnText.addEventListener('click', () => {
-            btnText.classList.add('active');
-            btnVoice.classList.remove('active');
-            micBtn.style.display = 'none';
-            textAreaContainer.style.display = 'block';
+            btnText.classList.add('active'); btnVoice.classList.remove('active');
+            micBtn.style.display = 'none'; textAreaContainer.style.display = 'block';
+            canvas.style.display = 'none';
             statusTitle.textContent = 'Напишіть ваше повідомлення';
             statusDesc.textContent = 'Розкажіть детальніше, що вам потрібно';
-            inputMode = 'text';
         });
 
-        // === РОЗПІЗНАВАННЯ ГОЛОСУ (SPEECH-TO-TEXT) ===
         let isRecording = false;
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         let recognition = null;
+        let mediaStream = null;
 
         if (SpeechRecognition) {
             recognition = new SpeechRecognition();
-            recognition.lang = 'uk-UA'; // Українська мова розпізнавання
+            recognition.lang = 'uk-UA';
             recognition.interimResults = false;
             
             recognition.onresult = (event) => {
-                const transcript = event.results[0][0].transcript;
-                userMessage.value += transcript + " ";
+                userMessage.value += event.results[0][0].transcript + " ";
+                saveData();
                 statusTitle.textContent = 'Голос записано!';
-                statusDesc.textContent = 'Текст додано. Ви можете перемкнутись на Текст, щоб відредагувати його.';
+                statusDesc.textContent = 'Текст додано. Перемкніться на Текст, щоб відредагувати.';
             };
 
-            recognition.onend = () => {
-                isRecording = false;
-                micBtn.classList.remove('recording');
-                if(statusTitle.textContent !== 'Голос записано!') {
-                    statusTitle.textContent = 'Натисніть, щоб почати запис войсу';
-                }
-            };
-
-            recognition.onerror = (event) => {
-                console.error("Помилка мікрофона: ", event.error);
-                statusTitle.textContent = 'Помилка доступу до мікрофона';
-                isRecording = false;
-                micBtn.classList.remove('recording');
-            };
+            recognition.onend = () => { stopRecordingUI(); };
+            recognition.onerror = () => { statusTitle.textContent = 'Помилка мікрофона'; stopRecordingUI(); };
         }
 
-        micBtn.addEventListener('click', () => {
-            if (!recognition) {
-                alert("Ваш браузер не підтримує розпізнавання голосу. Будь ласка, скористайтесь текстовим вводом.");
-                return;
-            }
+        function stopRecordingUI() {
+            isRecording = false;
+            micBtn.classList.remove('recording');
+            stopVisualizer();
+            if(mediaStream) mediaStream.getTracks().forEach(track => track.stop());
+            if(statusTitle.textContent !== 'Голос записано!') statusTitle.textContent = 'Натисніть, щоб почати запис войсу';
+        }
+
+        micBtn.addEventListener('click', async () => {
+            if (!recognition) { alert("Ваш браузер не підтримує розпізнавання голосу."); return; }
 
             if (!isRecording) {
-                recognition.start();
-                isRecording = true;
-                micBtn.classList.add('recording');
-                statusTitle.textContent = 'Слухаю вас...';
-                statusDesc.textContent = 'Говоріть чітко в мікрофон';
+                try {
+                    // Запит доступу до мікрофона для візуалізатора
+                    mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    startVisualizer(mediaStream);
+                    
+                    recognition.start();
+                    isRecording = true;
+                    micBtn.classList.add('recording');
+                    statusTitle.textContent = 'Слухаю вас...';
+                    statusDesc.textContent = 'Говоріть чітко в мікрофон';
+                } catch (err) {
+                    console.error("Немає доступу до мікрофона", err);
+                    alert("Будь ласка, надайте доступ до мікрофона.");
+                }
             } else {
                 recognition.stop();
+                stopRecordingUI();
             }
         });
 
-        // === ОБРОБКА ФОРМИ ТА ВІДПРАВКА НА GOOGLE SHEETS ===
+        // === 6. ОБРОБКА ФОРМИ ТА ВІДПРАВКА ===
         const contactForm = document.getElementById('contact-form');
         const modal = document.getElementById('success-modal');
         const closeModalBtn = document.getElementById('close-modal');
-        const submitBtn = document.querySelector('.submit-btn');
+        const submitBtn = document.getElementById('submit-btn');
 
         contactForm.addEventListener('submit', async (e) => {
             e.preventDefault(); 
             
-            // Збираємо дані
             const formData = {
+                type: 'lead', // Вказуємо, що це заявка клієнта
                 name: document.getElementById('user-name').value,
                 contact: document.getElementById('user-contact').value,
                 message: userMessage.value.trim(),
@@ -710,54 +583,53 @@
                 friendliness: document.getElementById('slider-friendliness').value,
                 academic: document.getElementById('slider-academic').value,
                 control: document.getElementById('slider-control').value,
+                utm_source: utmSource,
+                utm_campaign: utmCampaign,
                 timestamp: new Date().toLocaleString('uk-UA')
             };
 
-            // Змінюємо вигляд кнопки під час завантаження
             const originalBtnHtml = submitBtn.innerHTML;
             submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Відправляємо...';
             submitBtn.disabled = true;
 
             try {
-                // Відправка на Google Script
-                if(GOOGLE_SCRIPT_URL === 'ВАШ_URL_ТУТ') {
-                    console.log("Тестові дані (URL не підключено):", formData);
-                    // Імітація затримки для тестування
-                    await new Promise(resolve => setTimeout(resolve, 1000)); 
-                } else {
-                    await fetch(GOOGLE_SCRIPT_URL, {
-                        method: 'POST',
-                        mode: 'no-cors', // Необхідно для обходу обмежень CORS Google
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(formData)
-                    });
-                }
+                await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
 
-                // Показуємо успішне модальне вікно
+                formSubmitted = true;
+                trackEvent('Submit', 'Заявка успішно відправлена'); // Трекінг успіху
+
+                // Анімація Конфеті
+                confetti({
+                    particleCount: 150,
+                    spread: 70,
+                    origin: { y: 0.6 },
+                    colors: ['#ff9e80', '#e88768', '#fdf7f4', '#3a221a']
+                });
+
                 modal.classList.add('active');
+                
+                // Очищення даних
                 contactForm.reset();
                 userMessage.value = '';
+                inputsToSave.forEach(id => localStorage.removeItem(id));
+                Object.keys(sliders).forEach(id => updateEmoji(id));
                 
             } catch (error) {
                 alert("Виникла помилка при відправці. Спробуйте ще раз.");
-                console.error(error);
             } finally {
                 submitBtn.innerHTML = originalBtnHtml;
                 submitBtn.disabled = false;
             }
         });
 
-        closeModalBtn.addEventListener('click', () => {
-            modal.classList.remove('active'); 
-        });
+        closeModalBtn.addEventListener('click', () => modal.classList.remove('active'));
+        modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('active'); });
 
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                modal.classList.remove('active');
-            }
-        });
     </script>
 </body>
 </html>
