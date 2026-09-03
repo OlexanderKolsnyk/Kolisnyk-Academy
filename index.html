@@ -5,19 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kolisnyk Academy - Репетитор в 1 клік</title>
     
-    <!-- Підключення шрифту Nunito -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Підключення іконок FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- Бібліотека для конфеті -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <style>
-        /* === CSS ЗМІННІ (СВІТЛА ТЕМА ЗА ЗАМОВЧУВАННЯМ) === */
         :root {
             --bg-color: #FDF7F4; 
             --accent-color: #ff9e80; 
@@ -29,12 +23,9 @@
             --border-radius: 16px;
             --shadow: 0 10px 30px rgba(255, 158, 128, 0.15);
             --transition: all 0.3s ease;
-            
-            /* Патерн світлий */
             --bg-pattern: url("data:image/svg+xml,%3Csvg width='60' height='103.9' viewBox='0 0 60 103.9' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 103.9L0 86.6V51.9L30 34.6L60 51.9V86.6L30 103.9ZM30 101.9L58.2 85.5V52.9L30 36.6L1.8 52.9V85.5L30 101.9ZM15 77.9L0 69.3V34.6L15 26L30 34.6V69.3L15 77.9ZM15 75.9L28.2 68.3V35.6L15 28L1.8 35.6V68.3L15 75.9ZM45 77.9L30 69.3V34.6L45 26L60 34.6V69.3L45 77.9ZM45 75.9L58.2 68.3V35.6L45 28L31.8 35.6V68.3L45 75.9ZM15 26L0 17.3V-17.3L15 -26L30 -17.3V17.3L15 26ZM15 24L28.2 16.3V-16.3L15 -24L1.8 -16.3V16.3L15 24ZM45 26L30 17.3V-17.3L45 -26L60 -17.3V17.3L45 26ZM45 24L58.2 16.3V-16.3L45 -24L31.8 -16.3V16.3L45 24Z' fill='%23ff9e80' fill-opacity='0.15'/%3E%3C/svg%3E");
         }
 
-        /* === ТЕМНА ТЕМА === */
         [data-theme="dark"] {
             --bg-color: #1a1412; 
             --card-bg: rgba(40, 30, 26, 0.9);
@@ -45,107 +36,30 @@
             --bg-pattern: url("data:image/svg+xml,%3Csvg width='60' height='103.9' viewBox='0 0 60 103.9' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 103.9L0 86.6V51.9L30 34.6L60 51.9V86.6L30 103.9ZM30 101.9L58.2 85.5V52.9L30 36.6L1.8 52.9V85.5L30 101.9ZM15 77.9L0 69.3V34.6L15 26L30 34.6V69.3L15 77.9ZM15 75.9L28.2 68.3V35.6L15 28L1.8 35.6V68.3L15 75.9ZM45 77.9L30 69.3V34.6L45 26L60 34.6V69.3L45 77.9ZM45 75.9L58.2 68.3V35.6L45 28L31.8 35.6V68.3L45 75.9ZM15 26L0 17.3V-17.3L15 -26L30 -17.3V17.3L15 26ZM15 24L28.2 16.3V-16.3L15 -24L1.8 -16.3V16.3L15 24ZM45 26L30 17.3V-17.3L45 -26L60 -17.3V17.3L45 26ZM45 24L58.2 16.3V-16.3L45 -24L31.8 -16.3V16.3L45 24Z' fill='%23ff9e80' fill-opacity='0.05'/%3E%3C/svg%3E");
         }
 
-        /* === БАЗОВІ СТИЛІ === */
         * { box-sizing: border-box; margin: 0; padding: 0; }
-
-        body {
-            font-family: 'Nunito', sans-serif;
-            background-color: var(--bg-color);
-            background-image: var(--bg-pattern);
-            color: var(--text-dark);
-            line-height: 1.6;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        .card {
-            background: var(--card-bg);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            padding: 2rem;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        /* === HEADER === */
-        header {
-            background-color: var(--accent-color);
-            color: #3a221a;
-            padding: 1rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-
+        body { font-family: 'Nunito', sans-serif; background-color: var(--bg-color); background-image: var(--bg-pattern); color: var(--text-dark); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; transition: background-color 0.3s, color 0.3s; }
+        .card { background: var(--card-bg); border-radius: var(--border-radius); box-shadow: var(--shadow); padding: 2rem; backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        
+        header { background-color: var(--accent-color); color: #3a221a; padding: 1rem 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); }
         .logo-container { display: flex; align-items: center; gap: 1rem; cursor: pointer; }
         .logo-circle { width: 40px; height: 40px; background-color: #3a221a; color: var(--accent-color); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: 800; font-size: 1.1rem; }
         .brand-name { font-weight: 700; font-size: 1.25rem; }
-
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-        }
-
+        .header-actions { display: flex; align-items: center; gap: 1.5rem; }
         .social-icons { display: flex; gap: 1.25rem; }
         .social-icons a { color: #3a221a; font-size: 1.3rem; transition: var(--transition); }
         .social-icons a:hover { transform: translateY(-3px); color: white; }
-
-        /* Кнопка теми */
-        .theme-btn {
-            background: none; border: none; cursor: pointer;
-            font-size: 1.3rem; color: #3a221a;
-            transition: var(--transition);
-        }
+        .theme-btn { background: none; border: none; cursor: pointer; font-size: 1.3rem; color: #3a221a; transition: var(--transition); }
         .theme-btn:hover { transform: scale(1.1); color: white; }
 
-        /* === MAIN CONTENT === */
-        main {
-            flex: 1; width: 100%; max-width: 1100px;
-            margin: 0 auto; padding: 3rem 5%;
-            display: flex; flex-direction: column; gap: 3rem;
-        }
+        main { flex: 1; width: 100%; max-width: 1100px; margin: 0 auto; padding: 3rem 5%; display: flex; flex-direction: column; gap: 3rem; }
+        .main-title { text-align: center; color: var(--accent-color); font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800; text-transform: uppercase; }
 
-        .main-title {
-            text-align: center; color: var(--accent-color);
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            font-weight: 800; text-transform: uppercase;
-        }
-
-        /* Блок вводу */
         .input-block { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 1rem; padding: 3rem 2rem; position: relative; }
-        
-        /* Візуалізатор звуку */
-        #audio-visualizer {
-            display: none;
-            width: 150px; height: 50px;
-            margin-bottom: 1rem;
-        }
-
-        .mic-btn-large {
-            width: 80px; height: 80px; border-radius: 50%;
-            background-color: var(--accent-color); color: #3a221a;
-            border: none; font-size: 2.5rem;
-            display: flex; justify-content: center; align-items: center;
-            margin: 0 auto 1rem; cursor: pointer;
-            box-shadow: 0 8px 25px rgba(26, 54, 38, 0.3);
-            transition: var(--transition);
-            animation: pulse 2s infinite;
-        }
+        #audio-visualizer { display: none; width: 150px; height: 50px; margin-bottom: 1rem; }
+        .mic-btn-large { width: 80px; height: 80px; border-radius: 50%; background-color: var(--accent-color); color: #3a221a; border: none; font-size: 2.5rem; display: flex; justify-content: center; align-items: center; margin: 0 auto 1rem; cursor: pointer; box-shadow: 0 8px 25px rgba(26, 54, 38, 0.3); transition: var(--transition); animation: pulse 2s infinite; }
         .mic-btn-large:hover { transform: scale(1.05); background-color: var(--accent-hover); }
         .mic-btn-large.recording { animation: none; background-color: #ff4757; color: white; box-shadow: 0 0 0 10px rgba(255, 71, 87, 0.3); }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(255, 158, 128, 0.6); }
-            70% { box-shadow: 0 0 0 15px rgba(255, 158, 128, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 158, 128, 0); }
-        }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(255, 158, 128, 0.6); } 70% { box-shadow: 0 0 0 15px rgba(255, 158, 128, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 158, 128, 0); } }
 
         .input-block h2 { font-size: 1.5rem; color: var(--accent-color); margin-bottom: 0.5rem; }
         .input-block p { color: var(--text-gray); margin-bottom: 2rem; }
@@ -157,25 +71,16 @@
         .toggle-label { font-weight: 600; color: var(--accent-color); }
 
         .text-input-area { width: 100%; max-width: 500px; display: none; margin-bottom: 1rem; animation: fadeIn 0.3s ease; }
-        .text-input-area textarea {
-            width: 100%; padding: 1rem;
-            border: 2px solid var(--border-color); border-radius: 12px;
-            font-family: inherit; font-size: 1rem; min-height: 120px;
-            resize: vertical; color: var(--text-dark); background: var(--bg-color);
-        }
+        .text-input-area textarea { width: 100%; padding: 1rem; border: 2px solid var(--border-color); border-radius: 12px; font-family: inherit; font-size: 1rem; min-height: 120px; resize: vertical; color: var(--text-dark); background: var(--bg-color); }
         .text-input-area textarea:focus { outline: none; border-color: var(--accent-color); }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* === НИЖНЯ СЕКЦІЯ === */
         .bottom-section { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
         .section-title { color: var(--accent-color); font-size: 1.25rem; margin-bottom: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.75rem; }
         .settings-list { display: flex; flex-direction: column; gap: 1.5rem; }
-        
         .setting-item { display: flex; align-items: center; gap: 1rem; position: relative; }
         .setting-label { width: 140px; display: flex; align-items: center; gap: 0.75rem; font-weight: 600; color: var(--text-dark); font-size: 0.95rem; }
         .setting-label i { color: var(--accent-color); width: 20px; text-align: center; }
-        
-        /* Емодзі індикатор */
         .emoji-indicator { font-size: 1.25rem; min-width: 30px; text-align: center; }
 
         input[type=range] { -webkit-appearance: none; flex: 1; background: transparent; cursor: pointer; }
@@ -194,7 +99,6 @@
         .submit-btn { width: 100%; padding: 1rem; background-color: var(--accent-color); color: #3a221a; border: none; border-radius: 12px; font-size: 1.1rem; font-weight: 800; cursor: pointer; transition: var(--transition); display: flex; justify-content: center; align-items: center; gap: 0.5rem; margin-top: 1.5rem; }
         .submit-btn:hover { background-color: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(255, 158, 128, 0.3); }
 
-        /* === МОДАЛЬНЕ ВІКНО === */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); display: flex; justify-content: center; align-items: center; z-index: 1000; opacity: 0; visibility: hidden; transition: all 0.3s ease; backdrop-filter: blur(3px); }
         .modal-overlay.active { opacity: 1; visibility: visible; }
         .modal-content { background: var(--card-bg); padding: 2.5rem; border-radius: var(--border-radius); box-shadow: var(--shadow); text-align: center; max-width: 400px; width: 90%; transform: translateY(20px); transition: all 0.3s ease; border: 1px solid var(--border-color); }
@@ -226,10 +130,7 @@
                 <a href="https://www.instagram.com/kolisnyk_academy?igsi=Mmttb2JicnNpc3Zn" target="_blank" data-social="instagram" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
                 <a href="https://t.me/kolisnyk_academy" target="_blank" data-social="telegram" aria-label="Telegram"><i class="fa-brands fa-telegram"></i></a>
             </div>
-            <!-- Кнопка зміни теми -->
-            <button class="theme-btn" id="theme-toggle" aria-label="Змінити тему">
-                <i class="fa-solid fa-moon"></i>
-            </button>
+            <button class="theme-btn" id="theme-toggle" aria-label="Змінити тему"><i class="fa-solid fa-moon"></i></button>
         </div>
     </header>
 
@@ -237,19 +138,11 @@
         <h1 class="main-title">Репетитор в 1 клік!</h1>
 
         <section class="card input-block">
-            <!-- Візуалізатор звуку (Canvas) -->
             <canvas id="audio-visualizer"></canvas>
-
-            <button class="mic-btn-large" id="mic-btn" aria-label="Почати запис">
-                <i class="fa-solid fa-microphone"></i>
-            </button>
-            
-            <div class="text-input-area" id="text-area-container">
-                <textarea id="user-message" placeholder="Напишіть ваші побажання або тему для репетитора тут..."></textarea>
-            </div>
-
+            <button class="mic-btn-large" id="mic-btn" aria-label="Почати запис"><i class="fa-solid fa-microphone"></i></button>
+            <div class="text-input-area" id="text-area-container"><textarea id="user-message" placeholder="Напишіть ваші побажання або тему для репетитора тут..."></textarea></div>
             <h2 id="input-status-title">Натисніть, щоб почати запис войсу</h2>
-            <p id="input-status-desc">Голос буде автоматично переведено в текст</p>
+            <p id="input-status-desc">Аудіо буде збережено та відправлено менеджеру</p>
             
             <div class="toggle-container">
                 <div class="toggle-buttons">
@@ -263,7 +156,6 @@
         <section class="bottom-section">
             <div class="card settings-card">
                 <h3 class="section-title"><i class="fa-solid fa-sliders"></i> Налаштування репетитора</h3>
-                
                 <div class="settings-list">
                     <div class="setting-item">
                         <div class="setting-label"><i class="fa-solid fa-gauge-high"></i> Темп</div>
@@ -290,7 +182,6 @@
 
             <div class="card payment-card">
                 <h3 class="section-title"><i class="fa-regular fa-address-card"></i> Ваші дані</h3>
-                
                 <form action="#" id="contact-form">
                     <div class="form-group">
                         <div class="input-wrapper">
@@ -298,17 +189,13 @@
                             <input type="text" id="user-name" class="custom-input" placeholder="Введіть ваше ім'я" required>
                         </div>
                     </div>
-                    
                     <div class="form-group">
                         <div class="input-wrapper">
                             <i class="fa-regular fa-paper-plane input-icon"></i>
                             <input type="text" id="user-contact" class="custom-input" placeholder="Контакт (Телефон або Telegram)" required>
                         </div>
                     </div>
-
-                    <button type="submit" class="submit-btn" id="submit-btn">
-                        Надіслати <i class="fa-solid fa-arrow-right"></i>
-                    </button>
+                    <button type="submit" class="submit-btn" id="submit-btn">Надіслати <i class="fa-solid fa-arrow-right"></i></button>
                 </form>
             </div>
         </section>
@@ -324,10 +211,9 @@
     </div>
 
     <script>
-        // === URL ВАШОГО GOOGLE APPS SCRIPT ===
+        // === ВАШ УРЛ СКРИПТУ ===
         const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw4sVRam4j1jR6TAq7AgqKHczS7NFXvvdI6iFjin1Pu0gS0E5HSGZ_4VHiGMeetojlIUA/exec'; 
 
-        // === 1. ТЕМНА ТЕМА ===
         const themeBtn = document.getElementById('theme-toggle');
         const icon = themeBtn.querySelector('i');
         const currentTheme = localStorage.getItem('theme');
@@ -349,7 +235,6 @@
             }
         });
 
-        // === 2. ВІЗУАЛІЗАЦІЯ ПОВЗУНКІВ (ЕМОДЗІ) ===
         const sliders = {
             'slider-pace': { emojiId: 'emoji-pace', stops: [ {val: 33, em: '🐢'}, {val: 66, em: '🚶'}, {val: 101, em: '🚀'} ] },
             'slider-friendliness': { emojiId: 'emoji-friendliness', stops: [ {val: 33, em: '😐'}, {val: 66, em: '🙂'}, {val: 101, em: '🤗'} ] },
@@ -371,109 +256,62 @@
             slider.addEventListener('input', () => { updateEmoji(id); saveData(); });
         });
 
-        // === 3. ЗБЕРЕЖЕННЯ ДАНИХ (LocalStorage) ===
         const inputsToSave = ['user-message', 'slider-pace', 'slider-friendliness', 'slider-academic', 'slider-control', 'user-name', 'user-contact'];
         
-        function saveData() {
-            inputsToSave.forEach(id => localStorage.setItem(id, document.getElementById(id).value));
-        }
-
+        function saveData() { inputsToSave.forEach(id => localStorage.setItem(id, document.getElementById(id).value)); }
         function loadData() {
             inputsToSave.forEach(id => {
                 const val = localStorage.getItem(id);
                 if (val !== null) document.getElementById(id).value = val;
             });
-            Object.keys(sliders).forEach(id => updateEmoji(id)); // Оновити емодзі після завантаження
+            Object.keys(sliders).forEach(id => updateEmoji(id));
         }
 
         document.getElementById('contact-form').addEventListener('input', saveData);
         document.getElementById('user-message').addEventListener('input', saveData);
         window.addEventListener('DOMContentLoaded', loadData);
 
-        // === 4. АНАЛІТИКА ТА ВІДСТЕЖЕННЯ ===
         let userInteracted = false;
         let formSubmitted = false;
-        
-        // Отримання UTM міток з URL
         const urlParams = new URLSearchParams(window.location.search);
         const utmSource = urlParams.get('utm_source') || 'direct';
         const utmMedium = urlParams.get('utm_medium') || 'none';
         const utmCampaign = urlParams.get('utm_campaign') || 'none';
 
-        // Функція відправки аналітики
         function trackEvent(eventName, eventDetails = '') {
-            const data = {
-                type: 'analytics', // Вказуємо скрипту, що це статистика, а не заявка
-                event: eventName,
-                details: eventDetails,
-                utm_source: utmSource,
-                utm_medium: utmMedium,
-                timestamp: new Date().toLocaleString('uk-UA')
-            };
-            
-            // Використовуємо fetch з keepalive для гарантованої відправки при закритті вкладки
-            fetch(GOOGLE_SCRIPT_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                keepalive: true,
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            });
+            const data = { type: 'analytics', event: eventName, details: eventDetails, utm_source: utmSource, utm_medium: utmMedium, timestamp: new Date().toLocaleString('uk-UA') };
+            fetch(GOOGLE_SCRIPT_URL, { method: 'POST', mode: 'no-cors', keepalive: true, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
         }
 
-        // Відстеження активності користувача
         document.body.addEventListener('click', () => userInteracted = true, { once: true });
         document.body.addEventListener('input', () => userInteracted = true, { once: true });
-
-        // Трекінг кліків по соцмережах
-        document.querySelectorAll('[data-social]').forEach(link => {
-            link.addEventListener('click', (e) => {
-                trackEvent('Social Click', link.getAttribute('data-social'));
-            });
-        });
-
-        // Відстеження "кинутого кошика" (зайшов, щось ввів, але не натиснув Надіслати)
-        window.addEventListener('beforeunload', () => {
-            if (userInteracted && !formSubmitted) {
-                trackEvent('Bounce', 'Не відправив форму');
-            }
-        });
-
-        // Запис "просто візиту" при завантаженні (з UTM)
+        document.querySelectorAll('[data-social]').forEach(link => { link.addEventListener('click', (e) => { trackEvent('Social Click', link.getAttribute('data-social')); }); });
+        window.addEventListener('beforeunload', () => { if (userInteracted && !formSubmitted) trackEvent('Bounce', 'Не відправив форму'); });
         window.addEventListener('load', () => { trackEvent('Page View', 'Візит'); });
 
-        // === 5. ВІЗУАЛІЗАТОР ЗВУКУ (Audio Visualizer) ===
         const canvas = document.getElementById('audio-visualizer');
         const canvasCtx = canvas.getContext('2d');
-        let audioContext;
-        let analyser;
-        let source;
-        let animationId;
+        let audioContext, analyser, source, animationId;
 
         function startVisualizer(stream) {
             canvas.style.display = 'block';
             if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
             if (audioContext.state === 'suspended') audioContext.resume();
-            
             analyser = audioContext.createAnalyser();
-            analyser.fftSize = 64; // Розмір блоків для візуалізації
+            analyser.fftSize = 64; 
             source = audioContext.createMediaStreamSource(stream);
             source.connect(analyser);
-
             const bufferLength = analyser.frequencyBinCount;
             const dataArray = new Uint8Array(bufferLength);
 
             function draw() {
                 animationId = requestAnimationFrame(draw);
                 analyser.getByteFrequencyData(dataArray);
-
                 canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
                 const barWidth = (canvas.width / bufferLength) * 2.5;
-                let barHeight;
-                let x = 0;
-
+                let barHeight, x = 0;
                 for(let i = 0; i < bufferLength; i++) {
-                    barHeight = dataArray[i] / 2; // Масштабування
+                    barHeight = dataArray[i] / 2;
                     canvasCtx.fillStyle = `rgb(255, ${158 - (barHeight/2)}, 128)`;
                     canvasCtx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
                     x += barWidth + 2;
@@ -488,7 +326,6 @@
             if (source) source.disconnect();
         }
 
-        // === МІКРОФОН ТА РЕЖИМИ ===
         const btnVoice = document.getElementById('btn-voice');
         const btnText = document.getElementById('btn-text');
         const micBtn = document.getElementById('mic-btn');
@@ -497,11 +334,20 @@
         const statusTitle = document.getElementById('input-status-title');
         const statusDesc = document.getElementById('input-status-desc');
         
+        let inputMode = 'voice'; 
+        let isRecording = false;
+        let mediaRecorder;
+        let audioChunks = [];
+        let recordedAudioBase64 = null;
+        let recordedAudioMimeType = null;
+        let mediaStream = null;
+
         btnVoice.addEventListener('click', () => {
             btnVoice.classList.add('active'); btnText.classList.remove('active');
             micBtn.style.display = 'flex'; textAreaContainer.style.display = 'none';
             statusTitle.textContent = 'Натисніть, щоб почати запис войсу';
-            statusDesc.textContent = 'Голос буде автоматично переведено в текст';
+            statusDesc.textContent = 'Аудіо буде збережено та відправлено менеджеру';
+            inputMode = 'voice';
         });
 
         btnText.addEventListener('click', () => {
@@ -510,62 +356,53 @@
             canvas.style.display = 'none';
             statusTitle.textContent = 'Напишіть ваше повідомлення';
             statusDesc.textContent = 'Розкажіть детальніше, що вам потрібно';
+            inputMode = 'text';
         });
-
-        let isRecording = false;
-        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        let recognition = null;
-        let mediaStream = null;
-
-        if (SpeechRecognition) {
-            recognition = new SpeechRecognition();
-            recognition.lang = 'uk-UA';
-            recognition.interimResults = false;
-            
-            recognition.onresult = (event) => {
-                userMessage.value += event.results[0][0].transcript + " ";
-                saveData();
-                statusTitle.textContent = 'Голос записано!';
-                statusDesc.textContent = 'Текст додано. Перемкніться на Текст, щоб відредагувати.';
-            };
-
-            recognition.onend = () => { stopRecordingUI(); };
-            recognition.onerror = () => { statusTitle.textContent = 'Помилка мікрофона'; stopRecordingUI(); };
-        }
 
         function stopRecordingUI() {
             isRecording = false;
             micBtn.classList.remove('recording');
             stopVisualizer();
             if(mediaStream) mediaStream.getTracks().forEach(track => track.stop());
-            if(statusTitle.textContent !== 'Голос записано!') statusTitle.textContent = 'Натисніть, щоб почати запис войсу';
         }
 
         micBtn.addEventListener('click', async () => {
-            if (!recognition) { alert("Ваш браузер не підтримує розпізнавання голосу."); return; }
-
             if (!isRecording) {
                 try {
-                    // Запит доступу до мікрофона для візуалізатора
                     mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
                     startVisualizer(mediaStream);
                     
-                    recognition.start();
+                    mediaRecorder = new MediaRecorder(mediaStream);
+                    audioChunks = [];
+                    recordedAudioBase64 = null;
+
+                    mediaRecorder.ondataavailable = e => { if (e.data.size > 0) audioChunks.push(e.data); };
+
+                    mediaRecorder.onstop = () => {
+                        const audioBlob = new Blob(audioChunks, { type: mediaRecorder.mimeType });
+                        recordedAudioMimeType = mediaRecorder.mimeType;
+                        
+                        const reader = new FileReader();
+                        reader.readAsDataURL(audioBlob);
+                        reader.onloadend = () => {
+                            recordedAudioBase64 = reader.result.split(',')[1];
+                            statusTitle.textContent = 'Голос записано! 🎙️';
+                            statusDesc.textContent = 'Запис готовий до відправки. Натисніть кнопку "Надіслати" внизу.';
+                        };
+                    };
+
+                    mediaRecorder.start();
                     isRecording = true;
                     micBtn.classList.add('recording');
                     statusTitle.textContent = 'Слухаю вас...';
-                    statusDesc.textContent = 'Говоріть чітко в мікрофон';
-                } catch (err) {
-                    console.error("Немає доступу до мікрофона", err);
-                    alert("Будь ласка, надайте доступ до мікрофона.");
-                }
+                    statusDesc.textContent = 'Говоріть чітко в мікрофон, для завершення натисніть ще раз';
+                } catch (err) { alert("Будь ласка, надайте доступ до мікрофона."); }
             } else {
-                recognition.stop();
+                mediaRecorder.stop();
                 stopRecordingUI();
             }
         });
 
-        // === 6. ОБРОБКА ФОРМИ ТА ВІДПРАВКА ===
         const contactForm = document.getElementById('contact-form');
         const modal = document.getElementById('success-modal');
         const closeModalBtn = document.getElementById('close-modal');
@@ -574,11 +411,18 @@
         contactForm.addEventListener('submit', async (e) => {
             e.preventDefault(); 
             
+            if (inputMode === 'voice' && !recordedAudioBase64) {
+                alert("Будь ласка, запишіть голосове повідомлення перед відправкою, або перемкніться на текст.");
+                return;
+            }
+            
             const formData = {
-                type: 'lead', // Вказуємо, що це заявка клієнта
+                type: 'lead', 
                 name: document.getElementById('user-name').value,
                 contact: document.getElementById('user-contact').value,
-                message: userMessage.value.trim(),
+                message: inputMode === 'text' ? userMessage.value.trim() : "", 
+                audioBase64: inputMode === 'voice' ? recordedAudioBase64 : null,
+                audioMimeType: recordedAudioMimeType,
                 pace: document.getElementById('slider-pace').value,
                 friendliness: document.getElementById('slider-friendliness').value,
                 academic: document.getElementById('slider-academic').value,
@@ -593,38 +437,24 @@
             submitBtn.disabled = true;
 
             try {
-                await fetch(GOOGLE_SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(formData)
-                });
-
+                await fetch(GOOGLE_SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) });
                 formSubmitted = true;
-                trackEvent('Submit', 'Заявка успішно відправлена'); // Трекінг успіху
+                trackEvent('Submit', inputMode === 'voice' ? 'Заявка з аудіо' : 'Заявка з текстом');
 
-                // Анімація Конфеті
-                confetti({
-                    particleCount: 150,
-                    spread: 70,
-                    origin: { y: 0.6 },
-                    colors: ['#ff9e80', '#e88768', '#fdf7f4', '#3a221a']
-                });
-
+                confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }, colors: ['#ff9e80', '#e88768', '#fdf7f4', '#3a221a'] });
                 modal.classList.add('active');
                 
-                // Очищення даних
                 contactForm.reset();
                 userMessage.value = '';
+                recordedAudioBase64 = null;
+                statusTitle.textContent = 'Натисніть, щоб почати запис войсу';
+                statusDesc.textContent = 'Аудіо буде збережено та відправлено менеджеру';
+                
                 inputsToSave.forEach(id => localStorage.removeItem(id));
                 Object.keys(sliders).forEach(id => updateEmoji(id));
                 
-            } catch (error) {
-                alert("Виникла помилка при відправці. Спробуйте ще раз.");
-            } finally {
-                submitBtn.innerHTML = originalBtnHtml;
-                submitBtn.disabled = false;
-            }
+            } catch (error) { alert("Виникла помилка при відправці. Спробуйте ще раз."); } 
+            finally { submitBtn.innerHTML = originalBtnHtml; submitBtn.disabled = false; }
         });
 
         closeModalBtn.addEventListener('click', () => modal.classList.remove('active'));
