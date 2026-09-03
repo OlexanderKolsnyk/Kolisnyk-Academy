@@ -99,6 +99,16 @@
         .submit-btn { width: 100%; padding: 1rem; background-color: var(--accent-color); color: #3a221a; border: none; border-radius: 12px; font-size: 1.1rem; font-weight: 800; cursor: pointer; transition: var(--transition); display: flex; justify-content: center; align-items: center; gap: 0.5rem; margin-top: 1.5rem; }
         .submit-btn:hover { background-color: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(255, 158, 128, 0.3); }
 
+        /* === КНОПКА ТЕЛЕГРАМ (ДЗ ТА КОНСПЕКТИ) === */
+        .extra-links-section { display: flex; justify-content: center; margin-top: 2rem; width: 100%; }
+        .telegram-bonus-btn { display: inline-flex; align-items: center; justify-content: center; gap: 1rem; background-color: var(--card-bg); color: var(--text-dark); padding: 1rem 2rem; border-radius: var(--border-radius); border: 2px solid var(--border-color); text-decoration: none; transition: var(--transition); box-shadow: var(--shadow); width: 100%; max-width: 500px; text-align: left; }
+        .telegram-bonus-btn:hover { border-color: var(--accent-color); transform: translateY(-2px); box-shadow: 0 10px 25px rgba(255, 158, 128, 0.2); }
+        .telegram-bonus-btn i { font-size: 2.2rem; color: var(--accent-color); transition: var(--transition); }
+        .telegram-bonus-btn:hover i { transform: scale(1.1); }
+        .btn-text-content { display: flex; flex-direction: column; gap: 0.1rem; }
+        .btn-main-text { font-size: 1.1rem; font-weight: 800; line-height: 1.2; }
+        .btn-sub-text { font-size: 0.9rem; font-weight: 600; color: var(--text-gray); }
+
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); display: flex; justify-content: center; align-items: center; z-index: 1000; opacity: 0; visibility: hidden; transition: all 0.3s ease; backdrop-filter: blur(3px); }
         .modal-overlay.active { opacity: 1; visibility: visible; }
         .modal-content { background: var(--card-bg); padding: 2.5rem; border-radius: var(--border-radius); box-shadow: var(--shadow); text-align: center; max-width: 400px; width: 90%; transform: translateY(20px); transition: all 0.3s ease; border: 1px solid var(--border-color); }
@@ -199,6 +209,17 @@
                 </form>
             </div>
         </section>
+
+        <div class="extra-links-section">
+            <a href="https://t.me/tiktok_K_academy" target="_blank" class="telegram-bonus-btn" data-social="telegram-homework">
+                <i class="fa-brands fa-telegram"></i>
+                <div class="btn-text-content">
+                    <span class="btn-main-text">Конспекти та ДЗ з Тікток уроків</span>
+                    <span class="btn-sub-text">(телеграм група)</span>
+                </div>
+            </a>
+        </div>
+
     </main>
 
     <div class="modal-overlay" id="success-modal">
@@ -285,7 +306,14 @@
 
         document.body.addEventListener('click', () => userInteracted = true, { once: true });
         document.body.addEventListener('input', () => userInteracted = true, { once: true });
-        document.querySelectorAll('[data-social]').forEach(link => { link.addEventListener('click', (e) => { trackEvent('Social Click', link.getAttribute('data-social')); }); });
+        
+        // Трекінг кліків по соцмережах ТА кнопці ДЗ
+        document.querySelectorAll('[data-social]').forEach(link => { 
+            link.addEventListener('click', (e) => { 
+                trackEvent('Social Click', link.getAttribute('data-social')); 
+            }); 
+        });
+        
         window.addEventListener('beforeunload', () => { if (userInteracted && !formSubmitted) trackEvent('Bounce', 'Не відправив форму'); });
         window.addEventListener('load', () => { trackEvent('Page View', 'Візит'); });
 
