@@ -307,7 +307,6 @@
         document.body.addEventListener('click', () => userInteracted = true, { once: true });
         document.body.addEventListener('input', () => userInteracted = true, { once: true });
         
-        // Трекінг кліків по соцмережах ТА кнопці ДЗ
         document.querySelectorAll('[data-social]').forEach(link => { 
             link.addEventListener('click', (e) => { 
                 trackEvent('Social Click', link.getAttribute('data-social')); 
@@ -362,7 +361,6 @@
         const statusTitle = document.getElementById('input-status-title');
         const statusDesc = document.getElementById('input-status-desc');
         
-        let inputMode = 'voice'; 
         let isRecording = false;
         let mediaRecorder;
         let audioChunks = [];
@@ -375,7 +373,6 @@
             micBtn.style.display = 'flex'; textAreaContainer.style.display = 'none';
             statusTitle.textContent = 'Натисніть, щоб почати запис войсу';
             statusDesc.textContent = 'Аудіо буде збережено та відправлено менеджеру';
-            inputMode = 'voice';
         });
 
         btnText.addEventListener('click', () => {
@@ -384,7 +381,6 @@
             canvas.style.display = 'none';
             statusTitle.textContent = 'Напишіть ваше повідомлення';
             statusDesc.textContent = 'Розкажіть детальніше, що вам потрібно';
-            inputMode = 'text';
         });
 
         function stopRecordingUI() {
@@ -439,8 +435,11 @@
         contactForm.addEventListener('submit', async (e) => {
             e.preventDefault(); 
             
-            if (inputMode === 'voice' && !recordedAudioBase64) {
-                alert("Будь ласка, запишіть голосове повідомлення перед відправкою, або перемкніться на текст.");
+            const textMessage = userMessage.value.trim();
+
+            // Перевіряємо, чи ввели хоч щось (або текст, або аудіо)
+            if (!textMessage && !recordedAudioBase64) {
+                alert("Будь ласка, напишіть повідомлення або запишіть голосове перед відправкою.");
                 return;
             }
             
@@ -448,8 +447,8 @@
                 type: 'lead', 
                 name: document.getElementById('user-name').value,
                 contact: document.getElementById('user-contact').value,
-                message: inputMode === 'text' ? userMessage.value.trim() : "", 
-                audioBase64: inputMode === 'voice' ? recordedAudioBase64 : null,
+                message: textMessage, // Передаємо текст завжди (якщо він є)
+                audioBase64: recordedAudioBase64, // Передаємо аудіо завжди (якщо воно є)
                 audioMimeType: recordedAudioMimeType,
                 pace: document.getElementById('slider-pace').value,
                 friendliness: document.getElementById('slider-friendliness').value,
@@ -467,7 +466,12 @@
             try {
                 await fetch(GOOGLE_SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) });
                 formSubmitted = true;
-                trackEvent('Submit', inputMode === 'voice' ? 'Заявка з аудіо' : 'Заявка з текстом');
+                
+                // Аналітика: записуємо з чим саме була відправка
+                let submitType = 'Тільки Текст';
+                if (textMessage && recordedAudioBase64) submitType = 'Текст та Аудіо';
+                else if (recordedAudioBase64) submitType = 'Тільки Аудіо';
+                trackEvent('Submit', submitType);
 
                 confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }, colors: ['#ff9e80', '#e88768', '#fdf7f4', '#3a221a'] });
                 modal.classList.add('active');
