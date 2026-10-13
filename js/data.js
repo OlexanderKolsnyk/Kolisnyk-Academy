@@ -2,9 +2,9 @@
 window.SITE_DATA = {
   links: [
     { icon: "play", title: "Ефіри в TikTok", description: "Математика з нуля до НМТ — безкоштовно", href: "https://www.tiktok.com/@kolisnyk_academy", category: "free-live", accent: true },
-    { icon: "telegram", title: "Канал ефірів", description: "Розклад, конспекти й домашні завдання", href: "https://t.me/tiktok_K_academy", category: "live-channel" },
+    { icon: "telegram", title: "Матеріали з ефірів", description: "Розклад, конспекти, домашні завдання і записи ефірів", href: "https://t.me/tiktok_K_academy", category: "live-channel" },
     { icon: "function", title: "Ефіри про параметри", description: "Складна математика з Олександром", href: "https://www.tiktok.com/@kolisnyk_academy", category: "parameter-live" },
-    { icon: "telegram", title: "Telegram «Параметри»", description: "Матеріали та анонси відкритих занять", href: "https://t.me/parametry_online", category: "advanced-math" },
+    { icon: "telegram", title: "Telegram «Параметри»", description: "Записи занять, конспекти, домашні завдання", href: "https://t.me/parametry_online", category: "advanced-math" },
     { icon: "target", title: "Підготовка до НМТ", description: "Індивідуально, у парі або мінігрупі", href: "#lead-form", category: "nmt", goal: "Підготовка до НМТ" },
     { icon: "check", title: "Пробне НМТ", description: "Формат реального тесту та результат у балах", href: "https://olexanderkolsnyk.github.io/PNMT/", category: "trial-nmt" },
     { icon: "people", title: "Наші викладачі", description: "Познайомтеся з командою академії", href: "#teachers", category: "teachers" },
@@ -44,9 +44,9 @@ window.SITE_DATA = {
     alt: `Відгук учня або батьків Kolisnyk Academy ${index + 1}`
   })),
   free: [
-    { kicker: "Щомісяця", symbol: "НМТ", title: "Безкоштовне пробне НМТ", text: "Формат реального тесту, результат у балах і можливість отримати розбір.", href: "https://olexanderkolsnyk.github.io/PNMT/", category: "free-nmt", image: "assets/images/lessons/material-10-nmt-geometry.jpg" },
-    { kicker: "TikTok · безкоштовно", symbol: "▶", title: "Математика з нуля до НМТ", text: "Відкриті ефіри Катерини, а в Telegram — розклад, конспекти та домашні завдання.", href: "https://t.me/tiktok_K_academy", category: "kateryna-live", image: "assets/images/lessons/material-09-powers-homework.jpg" },
-    { kicker: "З Олександром", symbol: "ƒ(x)", title: "Рівняння з параметрами", text: "Безкоштовні ефіри зі складної математики та окремий канал з матеріалами.", href: "https://t.me/parametry_online", category: "oleksandr-live", image: "assets/images/lessons/material-01-parameter-equations.jpg" }
+    { kicker: "Щомісяця", symbol: "НМТ", title: "Безкоштовне пробне НМТ", text: "Формат реального тесту, результат у балах і можливість отримати розбір.", href: "https://olexanderkolsnyk.github.io/PNMT/", category: "free-nmt", image: "assets/images/free/free-trial-nmt.png" },
+    { kicker: "TikTok · безкоштовно", symbol: "▶", title: "Математика з нуля до НМТ", text: "Відкриті ефіри Катерини, а в Telegram — розклад, конспекти та домашні завдання.", href: "https://t.me/tiktok_K_academy", category: "kateryna-live", image: "assets/images/free/nmt-zero-to-200.png" },
+    { kicker: "З Олександром", symbol: "ƒ(x)", title: "Рівняння з параметрами", text: "Безкоштовні ефіри зі складної математики та окремий канал з матеріалами.", href: "https://t.me/parametry_online", category: "oleksandr-live", image: "assets/images/free/parameter-equations-simple.png" }
   ],
   prices: [
     { title: "Індивідуальні заняття", description: "Уся увага — лише тобі", price: "550–600 грн", unit: "за заняття", benefits: ["особистий план, темп і домашні завдання", "легко змінити час або перенести заняття", "максимум практики саме під твою ціль"] },
