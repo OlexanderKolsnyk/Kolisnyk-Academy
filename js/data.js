@@ -1,14 +1,14 @@
 /* Дані, які найчастіше змінюються. Редагуйте картки тут, не торкаючись розмітки. */
 window.SITE_DATA = {
   links: [
-    { icon: "⌁", title: "Підготовка до НМТ", description: "Індивідуально, у парі або в малій групі", href: "#lead-form", category: "nmt", accent: true, goal: "Підготовка до НМТ" },
-    { icon: "✓", title: "Пробне НМТ", description: "Усі 4 предмети, формат як на справжньому тесті", href: "https://olexanderkolsnyk.github.io/PNMT/", category: "trial-nmt" },
-    { icon: "◌", title: "Безкоштовні ефіри", description: "Математика з нуля до НМТ у TikTok", href: "https://t.me/tiktok_K_academy", category: "free-live" },
-    { icon: "▤", title: "Конспекти та ДЗ", description: "Матеріали до відкритих уроків", href: "https://t.me/tiktok_K_academy", category: "notes" },
-    { icon: "↗", title: "Складна математика", description: "Рівняння з параметрами з Олександром", href: "https://t.me/parametry_online", category: "advanced-math" },
-    { icon: "✦", title: "Підібрати викладача", description: "Розкажіть про ціль — команда запропонує варіанти", href: "#lead-form", category: "teacher-match", accent: true },
-    { icon: "◎", title: "Наші викладачі", description: "Познайомтеся з командою академії", href: "#teachers", category: "teachers" },
-    { icon: "₴", title: "Ціни", description: "Індивідуально, у парі або в групі", href: "#prices", category: "prices" }
+    { icon: "play", title: "Ефіри в TikTok", description: "Математика з нуля до НМТ — безкоштовно", href: "https://www.tiktok.com/@kolisnyk_academy", category: "free-live", accent: true },
+    { icon: "telegram", title: "Канал ефірів", description: "Розклад, конспекти й домашні завдання", href: "https://t.me/tiktok_K_academy", category: "live-channel" },
+    { icon: "function", title: "Ефіри про параметри", description: "Складна математика з Олександром", href: "https://www.tiktok.com/@kolisnyk_academy", category: "parameter-live" },
+    { icon: "telegram", title: "Telegram «Параметри»", description: "Матеріали та анонси відкритих занять", href: "https://t.me/parametry_online", category: "advanced-math" },
+    { icon: "target", title: "Підготовка до НМТ", description: "Індивідуально, у парі або мінігрупі", href: "#lead-form", category: "nmt", goal: "Підготовка до НМТ" },
+    { icon: "check", title: "Пробне НМТ", description: "Формат реального тесту та результат у балах", href: "https://olexanderkolsnyk.github.io/PNMT/", category: "trial-nmt" },
+    { icon: "people", title: "Наші викладачі", description: "Познайомтеся з командою академії", href: "#teachers", category: "teachers" },
+    { icon: "wallet", title: "Формати й ціни", description: "Порівняйте варіанти навчання", href: "#prices", category: "prices" }
   ],
   teachers: [
     { name: "Вероніка", subject: "Математика", image: "assets/images/teachers/teacher-01.jpg", trait: "Пояснює простою мовою та помічає, коли учень соромиться перепитати." },
@@ -26,26 +26,32 @@ window.SITE_DATA = {
     { name: "Інна", subject: "Математика", image: "assets/images/teachers/teacher-13.jpg", trait: "Перетворює складне на зрозуміле й допомагає побачити логіку." }
   ],
   lessons: [
-    { image: "assets/images/lessons/lesson-02.jpg", alt: "Приклад розв’язання задач у конспекті" },
-    { image: "assets/images/lessons/lesson-03.jpg", alt: "Онлайн-дошка з тригонометричним колом" },
-    { image: "assets/images/lessons/lesson-04.jpg", alt: "Пояснення комбінаторики на онлайн-дошці" },
-    { image: "assets/images/lessons/lesson-05.jpg", alt: "Навчальний матеріал із математики" },
-    { image: "assets/images/lessons/lesson-06.jpg", alt: "Фрагмент реального онлайн-уроку" },
-    { image: "assets/images/lessons/lesson-07.jpg", alt: "Приклад роботи на онлайн-дошці" }
+    { image: "assets/images/lessons/material-01-parameter-equations.jpg", alt: "Рівняння з параметрами — основні типи та методи розв’язання", format: "wide" },
+    { image: "assets/images/lessons/material-02-parameters-homework.jpg", alt: "Домашнє завдання з параметрів", format: "tall" },
+    { image: "assets/images/lessons/material-03-domain-restrictions.jpg", alt: "ОДЗ та основні обмеження", format: "wide" },
+    { image: "assets/images/lessons/material-04-geometry-homework.jpg", alt: "Домашнє завдання з олімпіадної геометрії", format: "tall" },
+    { image: "assets/images/lessons/material-05-quadratic-parameters.jpg", alt: "Квадратні рівняння з параметром", format: "wide" },
+    { image: "assets/images/lessons/material-06-linear-parameters.jpg", alt: "Лінійні рівняння з параметрами", format: "wide" },
+    { image: "assets/images/lessons/material-07-systems-parameters.jpg", alt: "Системи рівнянь з параметрами", format: "wide" },
+    { image: "assets/images/lessons/material-08-olympiad-tasks.jpg", alt: "Завдання для підготовки до олімпіади", format: "wide" },
+    { image: "assets/images/lessons/material-09-powers-homework.jpg", alt: "Домашнє завдання: степені та їхні властивості", format: "tall" },
+    { image: "assets/images/lessons/material-10-nmt-geometry.jpg", alt: "Тренувальне завдання НМТ з геометрії", format: "wide" },
+    { image: "assets/images/lessons/material-11-powers-table.jpg", alt: "Таблиця степенів", format: "tall" },
+    { image: "assets/images/lessons/lesson-01.png", alt: "Домашнє завдання із систем рівнянь", format: "wide" }
   ],
   reviews: Array.from({ length: 17 }, (_, index) => ({
     image: `assets/images/reviews/review-${String(index + 1).padStart(2, "0")}.jpg`,
     alt: `Відгук учня або батьків Kolisnyk Academy ${index + 1}`
   })),
   free: [
-    { kicker: "Щомісяця", symbol: "4/4", title: "Безкоштовне пробне НМТ", text: "Усі чотири предмети, бали у двох форматах і можливість отримати розбір.", href: "https://olexanderkolsnyk.github.io/PNMT/", category: "free-nmt" },
-    { kicker: "Пн і ср · 17:00", symbol: "▶", title: "Математика з нуля до НМТ", text: "Прямі ефіри Катерини у TikTok. Теми, конспекти та домашні завдання.", href: "https://t.me/tiktok_K_academy", category: "kateryna-live" },
-    { kicker: "Вт · 17:00", symbol: "ƒ(x)", title: "Рівняння з параметрами", text: "Складна математика з Олександром на відкритих TikTok-ефірах.", href: "https://t.me/parametry_online", category: "oleksandr-live" }
+    { kicker: "Щомісяця", symbol: "НМТ", title: "Безкоштовне пробне НМТ", text: "Формат реального тесту, результат у балах і можливість отримати розбір.", href: "https://olexanderkolsnyk.github.io/PNMT/", category: "free-nmt", image: "assets/images/lessons/material-10-nmt-geometry.jpg" },
+    { kicker: "TikTok · безкоштовно", symbol: "▶", title: "Математика з нуля до НМТ", text: "Відкриті ефіри Катерини, а в Telegram — розклад, конспекти та домашні завдання.", href: "https://t.me/tiktok_K_academy", category: "kateryna-live", image: "assets/images/lessons/material-09-powers-homework.jpg" },
+    { kicker: "З Олександром", symbol: "ƒ(x)", title: "Рівняння з параметрами", text: "Безкоштовні ефіри зі складної математики та окремий канал з матеріалами.", href: "https://t.me/parametry_online", category: "oleksandr-live", image: "assets/images/lessons/material-01-parameter-equations.jpg" }
   ],
   prices: [
-    { title: "Індивідуальне заняття", description: "Уся увага викладача — одному учню", price: "550–600 грн", unit: "за заняття" },
-    { title: "Парне заняття", description: "Лише двоє учнів зі схожою ціллю та рівнем", price: "425 грн", unit: "за учня" },
-    { title: "Мала група", description: "3–6 учнів, спільний темп і жива взаємодія", price: "300 грн", unit: "за учня" }
+    { title: "Індивідуальні заняття", description: "Уся увага — лише тобі", price: "550–600 грн", unit: "за заняття", benefits: ["особистий план, темп і домашні завдання", "легко змінити час або перенести заняття", "максимум практики саме під твою ціль"] },
+    { title: "Парні заняття", description: "Удвох цікавіше й уже не так страшно", price: "425 грн", unit: "за учня", benefits: ["можна прийти разом із другом", "помітно дешевше за індивідуальний формат", "достатньо персональної уваги кожному"] },
+    { title: "Мінігрупа", description: "Більше поглядів на кожну задачу", price: "300 грн", unit: "за учня", benefits: ["сильний формат для підготовки до НМТ", "вчимося на своїх і чужих помилках", "одну задачу бачимо з 4–5 різних боків"] }
   ],
   faq: [
     { q: "Що буде на пробному занятті?", a: "Знайомимося, уточнюємо ціль, дивимося поточний рівень і показуємо, як проходить робота з викладачем. Після цього команда пропонує подальший план." },
