@@ -151,13 +151,29 @@
     const submit = $("#submit-btn"); const original = submit.innerHTML;
     submit.disabled = true; submit.textContent = "Надсилаємо…";
     try {
-      await fetch(window.KAAnalytics.GOOGLE_SCRIPT_URL, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain" }, body: JSON.stringify(payload) });
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 20000);
+      let response;
+      try {
+        response = await fetch(window.KAAnalytics.GOOGLE_SCRIPT_URL, {
+          method: "POST",
+          mode: "cors",
+          redirect: "follow",
+          cache: "no-store",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify(payload),
+          signal: controller.signal
+        });
+      } finally {
+        clearTimeout(timeoutId);
+      }
+      if (!response.ok) throw new Error(`Google Apps Script повернув статус ${response.status}`);
       window.KAAnalytics.track("Submit", { selected_goal: selectedGoal, selected_teacher: fields.teacher.value, has_voice: payload.has_voice });
       if (typeof window.fbq === "function") window.fbq("track", "Lead");
       form.reset(); resetVoice(); draftFields.forEach(field => localStorage.removeItem(`ka_${field.id}`));
       Object.keys(valueLabels).forEach(key => outputs[key].textContent = valueLabels[key][1]);
       successDialog.showModal();
-    } catch (_) { error.textContent = "Не вдалося надіслати заявку. Спробуйте ще раз або напишіть нам у Telegram."; }
+    } catch (_) { error.textContent = "Заявка не була підтверджена сервером. Дані збережено — спробуйте ще раз або напишіть нам у Telegram."; }
     finally { submit.disabled = false; submit.innerHTML = original; }
   });
 })();
