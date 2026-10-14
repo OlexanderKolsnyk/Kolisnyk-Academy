@@ -1,9 +1,9 @@
 /* Дані, які найчастіше змінюються. Редагуйте картки тут, не торкаючись розмітки. */
 window.SITE_DATA = {
   links: [
-    { icon: "play", title: "Ефіри в TikTok", description: "Математика з нуля до НМТ — безкоштовно", href: "https://www.tiktok.com/@kolisnyk_academy", category: "free-live", accent: true },
+    { icon: "tiktok", title: "Ефіри в TikTok", description: "Математика з нуля до НМТ — безкоштовно", href: "https://www.tiktok.com/@kolisnyk_academy", category: "free-live", accent: true },
     { icon: "telegram", title: "Матеріали з ефірів", description: "Розклад, конспекти, домашні завдання і записи ефірів", href: "https://t.me/tiktok_K_academy", category: "live-channel" },
-    { icon: "function", title: "Ефіри про параметри", description: "Складна математика з Олександром", href: "https://www.tiktok.com/@kolisnyk_academy", category: "parameter-live" },
+    { icon: "tiktok", title: "Ефіри про параметри", description: "Складна математика з Олександром у TikTok", href: "https://www.tiktok.com/@kolisnyk_academy", category: "parameter-live" },
     { icon: "telegram", title: "Telegram «Параметри»", description: "Записи занять, конспекти, домашні завдання", href: "https://t.me/parametry_online", category: "advanced-math" },
     { icon: "book", title: "Корисна математика", description: "Теорія та тести за темами в Telegram", href: "https://t.me/katerina_math_nmt2", category: "useful-math" },
     { icon: "target", title: "Підготовка до НМТ", description: "Індивідуально, у парі або мінігрупі", href: "#lead-form", category: "nmt", goal: "Підготовка до НМТ" },

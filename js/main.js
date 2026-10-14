@@ -9,6 +9,7 @@
   const $ = (selector, scope = document) => scope.querySelector(selector);
   const escapeHtml = (value) => String(value).replace(/[&<>'"]/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" }[char]));
   const icons = {
+    tiktok: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4v10.2a4.8 4.8 0 1 1-4.1-4.7v3.2a1.8 1.8 0 1 0 1.1 1.7V4h3Z"/><path d="M15 4c.5 2.6 2 4.2 5 4.7v3.1c-2-.1-3.7-.8-5-2"/></svg>',
     play: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7.2v9.6L17 12 9 7.2Z"/><circle cx="12" cy="12" r="9"/></svg>',
     telegram: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 11 15-6-4 14-4-5-3 3v-4l8-5-10 4-2-1Z"/></svg>',
     function: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 5.5c-3-2-5 0-5.5 3L8.5 17c-.5 3-2.5 4-4 2M7 11h7M16 10l4 4m0-4-4 4"/></svg>',
