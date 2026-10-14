@@ -95,6 +95,24 @@
     menu.addEventListener("click", event => { if (event.target.matches("a")) { menu.hidden = true; button.setAttribute("aria-expanded", "false"); } });
   }
 
+  function setupTopLinks() {
+    document.querySelectorAll('.brand[href="#top"]').forEach(link => {
+      link.addEventListener("click", event => {
+        event.preventDefault();
+        history.replaceState(null, "", `${location.pathname}${location.search}`);
+        window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+
+        const menu = $("#mobile-menu");
+        const button = $(".menu-button");
+        if (menu && button) {
+          menu.hidden = true;
+          button.setAttribute("aria-expanded", "false");
+          button.setAttribute("aria-label", "Відкрити меню");
+        }
+      });
+    });
+  }
+
   function setupFaq() {
     $("#faq-list").addEventListener("click", event => {
       const button = event.target.closest(".faq-question");
@@ -126,6 +144,6 @@
   }
 
   renderLinks(); renderTeachers(); renderLessons(); renderReviews(); renderFree(); renderPrices(); renderFaq();
-  setupMenu(); setupFaq(); setupSelections();
+  setupMenu(); setupTopLinks(); setupFaq(); setupSelections();
   $("#current-year").textContent = new Date().getFullYear();
 })();
