@@ -51,6 +51,11 @@
     const wide = data.reviews.filter(item => item.format === "wide");
     const tall = data.reviews.filter(item => item.format !== "wide");
     $("#reviews-marquee").innerHTML = reviewRow(wide, "wide") + reviewRow(tall, "tall", true);
+    $("#text-reviews-grid").innerHTML = data.textReviews.map(item => `
+      <blockquote class="text-review-card">
+        <p>“${escapeHtml(item.text)}”</p>
+        <cite>${escapeHtml(item.name)}</cite>
+      </blockquote>`).join("");
   }
 
   function renderFree() {
