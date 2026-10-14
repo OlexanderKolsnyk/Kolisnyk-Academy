@@ -1,5 +1,10 @@
 (() => {
   "use strict";
+  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+  if (location.hash) history.replaceState(null, "", `${location.pathname}${location.search}`);
+  window.scrollTo(0, 0);
+  window.addEventListener("pageshow", () => requestAnimationFrame(() => window.scrollTo(0, 0)));
+
   const data = window.SITE_DATA;
   const $ = (selector, scope = document) => scope.querySelector(selector);
   const escapeHtml = (value) => String(value).replace(/[&<>'"]/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" }[char]));
@@ -10,7 +15,13 @@
     target: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="m14 10 6-6"/></svg>',
     check: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6"/><rect x="3" y="3" width="18" height="18" rx="6"/></svg>',
     people: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2"/><path d="M3 19c.5-4 2.5-6 6-6s5.5 2 6 6M15 14c3 0 5 1.5 5.5 4.5"/></svg>',
-    wallet: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7.5h15a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h12"/><path d="M16 12h5v4h-5a2 2 0 0 1 0-4Z"/></svg>'
+    wallet: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7.5h15a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h12"/><path d="M16 12h5v4h-5a2 2 0 0 1 0-4Z"/></svg>',
+    book: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5c3-1 5.5-.5 8 1.5v12c-2.5-2-5-2.5-8-1.5v-12Zm16 0c-3-1-5.5-.5-8 1.5v12c2.5-2 5-2.5 8-1.5v-12Z"/></svg>',
+    youtube: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="4"/><path d="m10 9 5 3-5 3V9Z"/></svg>',
+    instagram: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="5"/><circle cx="12" cy="12" r="3.5"/><circle cx="17.5" cy="6.5" r=".7" fill="currentColor"/></svg>',
+    threads: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.5 8.5c-1-2-2.8-3-5-3-4 0-6.5 2.8-6.5 6.8 0 4.1 2.5 6.7 6.3 6.7 3.4 0 5.7-1.7 5.7-4.3 0-2.1-1.6-3.5-4.1-3.5-2.3 0-3.8 1-3.8 2.6 0 1.4 1.2 2.3 2.8 2.3 2.7 0 4.6-2.2 4.6-5.2 0-3.4-1.7-5.6-4.8-5.6"/></svg>',
+    facebook: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-8h2.8l.5-3h-3.3V8.2c0-.9.3-1.7 1.8-1.7H17V3.8c-.6-.1-1.4-.2-2.4-.2-2.5 0-4.1 1.5-4.1 4.3V10H8v3h2.5v8h3Z" fill="currentColor"/></svg>',
+    viber: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4.5c4-2 10-1.5 13 1.5 2.5 2.5 2.8 7.5.7 10.3-1.9 2.4-5.1 3.2-8.2 2.7L6 21l.8-3.8C3.8 14.4 2.8 7.7 5 4.5Z"/><path d="M8 8c.5 3.5 2.5 5.5 6 6m-5.5-6.5 1.5 2-1 1c.7 1.3 1.7 2.3 3 3l1-1 2 1.5"/></svg>'
   };
 
   function renderLinks() {
@@ -31,14 +42,15 @@
     $("#lesson-gallery").innerHTML = data.lessons.map(item => `<figure class="lesson-thumb ${escapeHtml(item.format || "wide")}"><img src="${item.image}" alt="${escapeHtml(item.alt)}" loading="lazy"></figure>`).join("");
   }
 
-  function reviewRow(items, reverse = false) {
+  function reviewRow(items, format, reverse = false) {
     const doubled = [...items, ...items];
-    return `<div class="marquee-row${reverse ? " reverse" : ""}">${doubled.map((item, index) => `<figure class="review-card ${index % 4 < 2 ? "review-tall" : "review-wide"}"><img src="${item.image}" alt="${escapeHtml(item.alt)}" loading="lazy"></figure>`).join("")}</div>`;
+    return `<div class="marquee-row review-row-${format}${reverse ? " reverse" : ""}">${doubled.map(item => `<figure class="review-card review-${format}"><img src="${item.image}" alt="${escapeHtml(item.alt)}" loading="lazy"></figure>`).join("")}</div>`;
   }
 
   function renderReviews() {
-    const midpoint = Math.ceil(data.reviews.length / 2);
-    $("#reviews-marquee").innerHTML = reviewRow(data.reviews.slice(0, midpoint)) + reviewRow(data.reviews.slice(midpoint), true);
+    const wide = data.reviews.filter(item => item.format === "wide");
+    const tall = data.reviews.filter(item => item.format !== "wide");
+    $("#reviews-marquee").innerHTML = reviewRow(wide, "wide") + reviewRow(tall, "tall", true);
   }
 
   function renderFree() {

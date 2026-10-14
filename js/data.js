@@ -5,10 +5,16 @@ window.SITE_DATA = {
     { icon: "telegram", title: "Матеріали з ефірів", description: "Розклад, конспекти, домашні завдання і записи ефірів", href: "https://t.me/tiktok_K_academy", category: "live-channel" },
     { icon: "function", title: "Ефіри про параметри", description: "Складна математика з Олександром", href: "https://www.tiktok.com/@kolisnyk_academy", category: "parameter-live" },
     { icon: "telegram", title: "Telegram «Параметри»", description: "Записи занять, конспекти, домашні завдання", href: "https://t.me/parametry_online", category: "advanced-math" },
+    { icon: "book", title: "Корисна математика", description: "Теорія та тести за темами в Telegram", href: "https://t.me/katerina_math_nmt2", category: "useful-math" },
     { icon: "target", title: "Підготовка до НМТ", description: "Індивідуально, у парі або мінігрупі", href: "#lead-form", category: "nmt", goal: "Підготовка до НМТ" },
     { icon: "check", title: "Пробне НМТ", description: "Формат реального тесту та результат у балах", href: "https://olexanderkolsnyk.github.io/PNMT/", category: "trial-nmt" },
     { icon: "people", title: "Наші викладачі", description: "Познайомтеся з командою академії", href: "#teachers", category: "teachers" },
-    { icon: "wallet", title: "Формати й ціни", description: "Порівняйте варіанти навчання", href: "#prices", category: "prices" }
+    { icon: "wallet", title: "Формати й ціни", description: "Порівняйте варіанти навчання", href: "#prices", category: "prices" },
+    { icon: "youtube", title: "YouTube", description: "Навчальні відео Kolisnyk Academy", href: "https://www.youtube.com/@kolisnyk_academy", category: "youtube" },
+    { icon: "instagram", title: "Instagram", description: "Новини, пояснення та життя академії", href: "https://www.instagram.com/kolisnyk_academy", category: "instagram" },
+    { icon: "threads", title: "Threads", description: "Коротко про математику й навчання", href: "https://www.threads.com/@kolisnyk_academy?igshid=NTc4MTIwNjQ2YQ==", category: "threads" },
+    { icon: "facebook", title: "Facebook Катерини", description: "Сторінка співзасновниці академії", href: "https://www.facebook.com/katerina.kolisnik.727264", category: "facebook" },
+    { icon: "viber", title: "Viber", description: "Ще один зручний спосіб зв’язатися", href: "https://r.mssg.me/m/697bfcc0610fc48495b6ee1d", category: "viber" }
   ],
   teachers: [
     { name: "Вероніка", subject: "Математика", image: "assets/images/teachers/teacher-01.jpg", trait: "Пояснює простою мовою та помічає, коли учень соромиться перепитати." },
@@ -41,7 +47,8 @@ window.SITE_DATA = {
   ],
   reviews: Array.from({ length: 17 }, (_, index) => ({
     image: `assets/images/reviews/review-${String(index + 1).padStart(2, "0")}.jpg`,
-    alt: `Відгук учня або батьків Kolisnyk Academy ${index + 1}`
+    alt: `Відгук учня або батьків Kolisnyk Academy ${index + 1}`,
+    format: index >= 10 && index <= 12 ? "wide" : "tall"
   })),
   free: [
     { kicker: "Щомісяця", symbol: "НМТ", title: "Безкоштовне пробне НМТ", text: "Формат реального тесту, результат у балах і можливість отримати розбір.", href: "https://olexanderkolsnyk.github.io/PNMT/", category: "free-nmt", image: "assets/images/free/free-trial-nmt.png" },

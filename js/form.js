@@ -111,14 +111,41 @@
       pace: valueLabels.pace[Number(fields.pace.value) - 1], style: valueLabels.style[Number(fields.style.value) - 1],
       control: valueLabels.control[Number(fields.control.value) - 1], format: valueLabels.format[Number(fields.format.value) - 1]
     };
+    const selectedTeacher = fields.teacher.value || "Довіряю підбір команді";
+    const selectedLinkCategory = sessionStorage.getItem("ka_link_category") || "Не вказано";
+    const ctaLocation = sessionStorage.getItem("ka_cta_location") || "direct-form";
+    const referrer = document.referrer || "direct";
+    const hasVoice = Boolean(recordedBase64 && voiceConfirm.checked);
+    const submittedAt = new Date().toISOString();
+    const attribution = window.KAAnalytics.attribution;
+    const details = [
+      `Навчальна ціль: ${selectedGoal || "Не вказано"}`,
+      `Бажаний викладач: ${selectedTeacher}`,
+      `Темп пояснення: ${preferences.pace}`,
+      `Стиль комунікації: ${preferences.style}`,
+      `Рівень контролю: ${preferences.control}`,
+      `Формат пояснення: ${preferences.format}`,
+      `Обране посилання: ${selectedLinkCategory}`,
+      `Місце CTA: ${ctaLocation}`,
+      `Referrer: ${referrer}`,
+      `Голосове: ${hasVoice ? "Так" : "Ні"}`,
+      `UTM Medium: ${attribution.utm_medium}`,
+      `UTM Content: ${attribution.utm_content}`,
+      `UTM Term: ${attribution.utm_term}`,
+      `Timestamp ISO: ${submittedAt}`
+    ].join("\n");
+    const userMessage = fields.message.value.trim();
     const payload = {
-      type: "lead", name: fields.name.value.trim(), contact: fields.contact.value.trim(), message: fields.message.value.trim(),
+      type: "lead", name: fields.name.value.trim(), contact: fields.contact.value.trim(), message: `${userMessage}${userMessage ? "\n\n" : ""}${details}`,
       audioBase64: recordedBase64 && voiceConfirm.checked ? recordedBase64 : null,
       audioMimeType: recordedBase64 && voiceConfirm.checked ? recordedMimeType : null,
-      has_voice: Boolean(recordedBase64 && voiceConfirm.checked), selected_goal: selectedGoal,
-      selected_link_category: sessionStorage.getItem("ka_link_category") || "", selected_teacher: fields.teacher.value,
-      cta_location: sessionStorage.getItem("ka_cta_location") || "direct-form", referrer: document.referrer || "direct",
-      teacher_preferences: JSON.stringify(preferences), ...window.KAAnalytics.attribution, timestamp: new Date().toISOString()
+      has_voice: hasVoice, selected_goal: selectedGoal,
+      selected_link_category: selectedLinkCategory, selected_teacher: selectedTeacher,
+      cta_location: ctaLocation, referrer,
+      teacher_preferences: JSON.stringify(preferences),
+      pace: preferences.pace, friendliness: preferences.style, academic: preferences.format, control: preferences.control,
+      preference_pace: preferences.pace, preference_style: preferences.style, preference_control: preferences.control, preference_format: preferences.format,
+      ...attribution, timestamp: submittedAt
     };
 
     const submit = $("#submit-btn"); const original = submit.innerHTML;
