@@ -42,20 +42,32 @@
     $("#lesson-gallery").innerHTML = data.lessons.map(item => `<figure class="lesson-thumb ${escapeHtml(item.format || "wide")}"><img src="${item.image}" alt="${escapeHtml(item.alt)}" loading="lazy"></figure>`).join("");
   }
 
+  function interleaveReviews(images, texts, format) {
+    const mixed = [];
+    const length = Math.max(images.length, texts.length);
+    for (let index = 0; index < length; index += 1) {
+      if (images[index]) mixed.push(images[index]);
+      if (texts[index]) mixed.push({ ...texts[index], format, textReview: true });
+    }
+    return mixed;
+  }
+
+  function reviewCard(item, format) {
+    if (item.textReview) return `<blockquote class="review-card review-${format} review-text"><p>${escapeHtml(item.text)}</p><cite>${escapeHtml(item.name)}</cite></blockquote>`;
+    return `<figure class="review-card review-${format}"><img src="${item.image}" alt="${escapeHtml(item.alt)}" loading="lazy"></figure>`;
+  }
+
   function reviewRow(items, format, reverse = false) {
     const doubled = [...items, ...items];
-    return `<div class="marquee-row review-row-${format}${reverse ? " reverse" : ""}">${doubled.map(item => `<figure class="review-card review-${format}"><img src="${item.image}" alt="${escapeHtml(item.alt)}" loading="lazy"></figure>`).join("")}</div>`;
+    return `<div class="marquee-row review-row-${format}${reverse ? " reverse" : ""}">${doubled.map(item => reviewCard(item, format)).join("")}</div>`;
   }
 
   function renderReviews() {
     const wide = data.reviews.filter(item => item.format === "wide");
     const tall = data.reviews.filter(item => item.format !== "wide");
-    $("#reviews-marquee").innerHTML = reviewRow(wide, "wide") + reviewRow(tall, "tall", true);
-    $("#text-reviews-grid").innerHTML = data.textReviews.map(item => `
-      <blockquote class="text-review-card">
-        <p>“${escapeHtml(item.text)}”</p>
-        <cite>${escapeHtml(item.name)}</cite>
-      </blockquote>`).join("");
+    const wideTexts = data.textReviews.filter((_, index) => index % 2 === 0);
+    const tallTexts = data.textReviews.filter((_, index) => index % 2 !== 0);
+    $("#reviews-marquee").innerHTML = reviewRow(interleaveReviews(wide, wideTexts, "wide"), "wide") + reviewRow(interleaveReviews(tall, tallTexts, "tall"), "tall", true);
   }
 
   function renderFree() {
