@@ -167,7 +167,12 @@
       } finally {
         clearTimeout(timeoutId);
       }
-      if (!response.ok) throw new Error(`Google Apps Script повернув статус ${response.status}`);
+      const responseText = await response.text();
+      let serverResult = null;
+      try { serverResult = JSON.parse(responseText); } catch (_) {}
+      if (!response.ok || serverResult?.ok !== true) {
+        throw new Error(serverResult?.error || `Google Apps Script повернув статус ${response.status}`);
+      }
       window.KAAnalytics.track("Submit", { selected_goal: selectedGoal, selected_teacher: fields.teacher.value, has_voice: payload.has_voice });
       if (typeof window.fbq === "function") window.fbq("track", "Lead");
       form.reset(); resetVoice(); draftFields.forEach(field => localStorage.removeItem(`ka_${field.id}`));
