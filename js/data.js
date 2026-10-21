@@ -33,17 +33,23 @@ window.SITE_DATA = {
   ],
   lessons: [
     { image: "assets/images/lessons/material-01-parameter-equations.jpg", alt: "Рівняння з параметрами — основні типи та методи розв’язання", format: "wide" },
+    { image: "assets/images/lessons/material-14-vectors.jpg", alt: "Вектори — основні поняття та позначення", format: "wide" },
     { image: "assets/images/lessons/material-02-parameters-homework.jpg", alt: "Домашнє завдання з параметрів", format: "tall" },
+    { image: "assets/images/lessons/material-12-trigonometry-intro.jpg", alt: "Навіщо нам тригонометрія", format: "tall" },
     { image: "assets/images/lessons/material-03-domain-restrictions.jpg", alt: "ОДЗ та основні обмеження", format: "wide" },
+    { image: "assets/images/lessons/material-15-vectors-plane.jpg", alt: "Координати вектора на площині", format: "wide" },
     { image: "assets/images/lessons/material-04-geometry-homework.jpg", alt: "Домашнє завдання з олімпіадної геометрії", format: "tall" },
+    { image: "assets/images/lessons/material-16-trigonometry.jpg", alt: "Тригонометрія та періодичні процеси", format: "tall" },
     { image: "assets/images/lessons/material-05-quadratic-parameters.jpg", alt: "Квадратні рівняння з параметром", format: "wide" },
+    { image: "assets/images/lessons/material-13-radians.jpg", alt: "Радіани та таблиця тригонометричних значень", format: "tall" },
     { image: "assets/images/lessons/material-06-linear-parameters.jpg", alt: "Лінійні рівняння з параметрами", format: "wide" },
+    { image: "assets/images/lessons/material-17-coordinates.jpg", alt: "Координати на площині та в просторі", format: "wide" },
     { image: "assets/images/lessons/material-07-systems-parameters.jpg", alt: "Системи рівнянь з параметрами", format: "wide" },
     { image: "assets/images/lessons/material-08-olympiad-tasks.jpg", alt: "Завдання для підготовки до олімпіади", format: "wide" },
     { image: "assets/images/lessons/material-09-powers-homework.jpg", alt: "Домашнє завдання: степені та їхні властивості", format: "tall" },
     { image: "assets/images/lessons/material-10-nmt-geometry.jpg", alt: "Тренувальне завдання НМТ з геометрії", format: "wide" },
     { image: "assets/images/lessons/material-11-powers-table.jpg", alt: "Таблиця степенів", format: "tall" },
-    { image: "assets/images/lessons/lesson-01.png", alt: "Домашнє завдання із систем рівнянь", format: "wide" }
+    { image: "assets/images/lessons/lesson-01.jpg", alt: "Домашнє завдання із систем рівнянь", format: "wide" }
   ],
   reviews: Array.from({ length: 17 }, (_, index) => ({
     image: `assets/images/reviews/review-${String(index + 1).padStart(2, "0")}.jpg?v=20261020-1`,
@@ -67,9 +73,9 @@ window.SITE_DATA = {
     { name: "Учень", text: "Мій репетитор — просто знахідка. Я завжди соромився перепитувати, якщо щось не зрозумів, але тут така комфортна атмосфера, що всі питання відпадають самі собою. Матеріал подається дуже структуровано і без зайвого навантаження." }
   ],
   free: [
-    { kicker: "Щомісяця", symbol: "НМТ", title: "Безкоштовне пробне НМТ", text: "Формат реального тесту, результат у балах і можливість отримати розбір.", href: "https://olexanderkolsnyk.github.io/PNMT/", category: "free-nmt", image: "assets/images/free/free-trial-nmt.png" },
-    { kicker: "TikTok · безкоштовно", symbol: "▶", title: "Математика з нуля до НМТ", text: "Відкриті ефіри Катерини, а в Telegram — розклад, конспекти та домашні завдання.", href: "https://t.me/tiktok_K_academy", category: "kateryna-live", image: "assets/images/free/nmt-zero-to-200.png" },
-    { kicker: "З Олександром", symbol: "ƒ(x)", title: "Рівняння з параметрами", text: "Безкоштовні ефіри зі складної математики та окремий канал з матеріалами.", href: "https://t.me/parametry_online", category: "oleksandr-live", image: "assets/images/free/parameter-equations-simple.png" }
+    { kicker: "Щомісяця", symbol: "НМТ", title: "Безкоштовне пробне НМТ", text: "Формат реального тесту, результат у балах і можливість отримати розбір.", href: "https://olexanderkolsnyk.github.io/PNMT/", category: "free-nmt", image: "assets/images/free/free-trial-nmt.jpg" },
+    { kicker: "TikTok · безкоштовно", symbol: "▶", title: "Математика з нуля до НМТ", text: "Відкриті ефіри Катерини, а в Telegram — розклад, конспекти та домашні завдання.", href: "https://t.me/tiktok_K_academy", category: "kateryna-live", image: "assets/images/free/nmt-zero-to-200.jpg" },
+    { kicker: "З Олександром", symbol: "ƒ(x)", title: "Рівняння з параметрами", text: "Безкоштовні ефіри зі складної математики та окремий канал з матеріалами.", href: "https://t.me/parametry_online", category: "oleksandr-live", image: "assets/images/free/parameter-equations-simple.jpg" }
   ],
   prices: [
     { title: "Індивідуальні заняття", description: "Уся увага — лише тобі", price: "550–600 грн", unit: "за заняття", benefits: ["особистий план, темп і домашні завдання", "легко змінити час або перенести заняття", "максимум практики саме під твою ціль"] },
