@@ -6,7 +6,7 @@ window.SITE_DATA = {
     { icon: "tiktok", title: "Ефіри про параметри", description: "Складна математика з Олександром у TikTok", href: "https://www.tiktok.com/@kolisnyk_academy", category: "parameter-live" },
     { icon: "telegram", title: "Telegram «Параметри»", description: "Записи занять, конспекти, домашні завдання", href: "https://t.me/parametry_online", category: "advanced-math" },
     { icon: "book", title: "Корисна математика", description: "Теорія та тести за темами в Telegram", href: "https://t.me/katerina_math_nmt2", category: "useful-math" },
-    { icon: "target", title: "Підібрати навчання", description: "Ціль, формат і зручний спосіб зв’язку", href: "preparation.html", category: "nmt", goal: "Підготовка до НМТ" },
+    { icon: "target", title: "Підготовка до НМТ", description: "Індивідуально, у парі або мінігрупі", href: "#lead-form", category: "nmt", goal: "Підготовка до НМТ" },
     { icon: "check", title: "Пробне НМТ", description: "Формат реального тесту та результат у балах", href: "https://olexanderkolsnyk.github.io/PNMT/", category: "trial-nmt" },
     { icon: "people", title: "Наші викладачі", description: "Познайомтеся з командою академії", href: "#teachers", category: "teachers" },
     { icon: "wallet", title: "Формати й ціни", description: "Порівняйте варіанти навчання", href: "#prices", category: "prices" },
