@@ -34,6 +34,7 @@ function doPost(e) {
     if (data.type === "lead") {
       var leadSheet = spreadsheet.getSheetByName("Leads");
       if (!leadSheet) leadSheet = spreadsheet.insertSheet("Leads");
+      ensureLeadAnalyticsHeaders_(leadSheet);
 
       var finalMessage = data.message || "";
       if (data.audioBase64) {
@@ -69,7 +70,9 @@ function doPost(e) {
         data.utm_medium || "none",
         data.utm_content || "none",
         data.utm_term || "none",
-        submittedAt
+        submittedAt,
+        data.visitor_id || "",
+        data.session_id || ""
       ]);
 
       return ContentService.createTextOutput(JSON.stringify({ ok: true, row: targetRow }))
@@ -77,15 +80,28 @@ function doPost(e) {
     }
 
     if (data.type === "analytics") {
-      var analyticsSheet = spreadsheet.getSheetByName("Analytics");
-      if (!analyticsSheet) analyticsSheet = spreadsheet.insertSheet("Analytics");
-      analyticsSheet.appendRow([
-        data.timestamp || new Date().toISOString(),
-        data.event || "",
-        JSON.stringify(data.details || {}),
-        data.utm_source || "direct",
-        data.utm_medium || "none"
+      var analyticsSheetName = data.site === "pnmt" ? "PNMT Analytics" : "Analytics";
+      var analyticsSheet = spreadsheet.getSheetByName(analyticsSheetName);
+      if (!analyticsSheet) analyticsSheet = spreadsheet.insertSheet(analyticsSheetName);
+      var analyticsHeaders = [
+        "ServerTimestamp","ClientTimestamp","WeekKey","Site","Event","ControlType",
+        "ElementID","Text","Href","Page","Referrer","VisitorID","SessionID","Sequence",
+        "RegistrationID","Details","UTMSource","UTMMedium","UTMCampaign","UTMContent","UTMTerm"
+      ];
+      ensureAnalyticsHeaders_(analyticsSheet, analyticsHeaders);
+      var details = data.details || {};
+      writeToFirstEmptyRow_(analyticsSheet, [
+        new Date(), data.client_timestamp || data.timestamp || new Date().toISOString(),
+        data.week_key || "", data.site || "kolisnyk_academy", data.event || "",
+        details.control_type || data.control_type || "", details.element_id || data.element_id || "",
+        details.text || data.text || "", details.href || data.href || "", data.page || details.page || "",
+        data.referrer || details.referrer || "", data.visitor_id || details.visitor_id || "",
+        data.session_id || details.session_id || "", data.sequence || details.sequence || "",
+        data.registration_id || "", JSON.stringify(details), data.utm_source || "direct",
+        data.utm_medium || "none", data.utm_campaign || "none", data.utm_content || "none",
+        data.utm_term || "none"
       ]);
+      updateAnalyticsWeekly_(spreadsheet, data, details);
       return ContentService.createTextOutput(JSON.stringify({ ok: true }))
         .setMimeType(ContentService.MimeType.JSON);
     }
@@ -94,5 +110,63 @@ function doPost(e) {
   } catch (error) {
     return ContentService.createTextOutput(JSON.stringify({ ok: false, error: error.message }))
       .setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+function ensureAnalyticsHeaders_(sheet, headers) {
+  if (sheet.getLastRow() === 0 || !sheet.getRange(1, 1).getValue()) {
+    sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
+    sheet.setFrozenRows(1);
+    return;
+  }
+  var first = String(sheet.getRange(1, 1).getDisplayValue() || "");
+  if (first !== headers[0]) {
+    sheet.insertRowBefore(1);
+    sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
+  }
+  sheet.setFrozenRows(1);
+}
+
+function ensureLeadAnalyticsHeaders_(sheet) {
+  var headers = sheet.getRange(1, 21, 1, 2).getDisplayValues()[0];
+  if (!headers[0]) sheet.getRange(1, 21).setValue("VisitorID");
+  if (!headers[1]) sheet.getRange(1, 22).setValue("SessionID");
+  sheet.setFrozenRows(1);
+}
+
+function updateAnalyticsWeekly_(spreadsheet, data, details) {
+  var sheet = spreadsheet.getSheetByName("Analytics Weekly");
+  if (!sheet) sheet = spreadsheet.insertSheet("Analytics Weekly");
+  var headers = ["WeekKey","Site","Event","Control","Count","LastTimestamp"];
+  ensureAnalyticsHeaders_(sheet, headers);
+  var weekKey = data.week_key || "unknown";
+  var site = data.site || "kolisnyk_academy";
+  var eventName = data.event || "unknown";
+  var control = details.text || data.text || details.href || data.href || details.target || "unknown";
+  var lock = LockService.getScriptLock();
+  lock.waitLock(30000);
+  try {
+    var lastRow = sheet.getLastRow();
+    if (lastRow > 1) {
+      var rows = sheet.getRange(2, 1, lastRow - 1, 6).getValues();
+      for (var index = 0; index < rows.length; index += 1) {
+        if (String(rows[index][0]) === String(weekKey) &&
+            String(rows[index][1]) === String(site) &&
+            String(rows[index][2]) === String(eventName) &&
+            String(rows[index][3]) === String(control)) {
+          sheet.getRange(index + 2, 5, 1, 2).setValues([[
+            Number(rows[index][4] || 0) + 1,
+            new Date()
+          ]]);
+          return;
+        }
+      }
+    }
+    var targetRow = firstEmptyRow_(sheet, headers.length);
+    sheet.getRange(targetRow, 1, 1, headers.length).setValues([[
+      weekKey, site, eventName, control, 1, new Date()
+    ]]);
+  } finally {
+    lock.releaseLock();
   }
 }

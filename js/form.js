@@ -132,6 +132,8 @@
       `UTM Medium: ${attribution.utm_medium}`,
       `UTM Content: ${attribution.utm_content}`,
       `UTM Term: ${attribution.utm_term}`,
+      `Visitor ID: ${window.KAAnalytics.visitorId}`,
+      `Session ID: ${window.KAAnalytics.sessionId}`,
       `Timestamp ISO: ${submittedAt}`
     ].join("\n");
     const userMessage = fields.message.value.trim();
@@ -145,6 +147,7 @@
       teacher_preferences: JSON.stringify(preferences),
       pace: preferences.pace, friendliness: preferences.style, academic: preferences.format, control: preferences.control,
       preference_pace: preferences.pace, preference_style: preferences.style, preference_control: preferences.control, preference_format: preferences.format,
+      visitor_id: window.KAAnalytics.visitorId, session_id: window.KAAnalytics.sessionId,
       ...attribution, timestamp: submittedAt
     };
 
@@ -173,7 +176,7 @@
       if (!response.ok || serverResult?.ok !== true) {
         throw new Error(serverResult?.error || `Google Apps Script повернув статус ${response.status}`);
       }
-      window.KAAnalytics.track("Submit", { selected_goal: selectedGoal, selected_teacher: fields.teacher.value, has_voice: payload.has_voice });
+      window.KAAnalytics.track("form_submit_success", { selected_goal: selectedGoal, selected_teacher: fields.teacher.value, has_voice: payload.has_voice });
       if (typeof window.fbq === "function") window.fbq("track", "Lead");
       form.reset(); resetVoice(); draftFields.forEach(field => localStorage.removeItem(`ka_${field.id}`));
       Object.keys(valueLabels).forEach(key => outputs[key].textContent = valueLabels[key][1]);
