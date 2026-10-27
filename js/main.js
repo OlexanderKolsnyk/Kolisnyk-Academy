@@ -44,32 +44,33 @@
     $("#lesson-gallery").innerHTML = data.lessons.map(item => `<figure class="lesson-thumb ${escapeHtml(item.format || "wide")}"><img src="${item.image}" alt="${escapeHtml(item.alt)}" loading="lazy"></figure>`).join("");
   }
 
-  function interleaveReviews(images, texts, format) {
+  function buildReviewSequence(images, texts) {
     const mixed = [];
-    const length = Math.max(images.length, texts.length);
-    for (let index = 0; index < length; index += 1) {
-      if (images[index]) mixed.push(images[index]);
-      if (texts[index]) mixed.push({ ...texts[index], format, textReview: true });
-    }
+    images.forEach((image, imageIndex) => {
+      for (let textOffset = 0; textOffset < 2; textOffset += 1) {
+        const text = texts[(imageIndex * 2 + textOffset) % texts.length];
+        mixed.push({ ...text, textReview: true });
+      }
+      mixed.push(image);
+    });
     return mixed;
   }
 
-  function reviewCard(item, format) {
-    if (item.textReview) return `<blockquote class="review-card review-${format} review-text"><p>${escapeHtml(item.text)}</p><cite>${escapeHtml(item.name)}</cite></blockquote>`;
-    return `<figure class="review-card review-${format}"><img src="${item.image}" alt="${escapeHtml(item.alt)}" loading="lazy"></figure>`;
+  function reviewCard(item) {
+    if (item.textReview) {
+      const cardWidth = Math.max(285, Math.min(410, 255 + Math.round(item.text.length * .48)));
+      return `<blockquote class="review-card review-text" style="--review-width:${cardWidth}px"><p>${escapeHtml(item.text)}</p><cite>${escapeHtml(item.name)}</cite></blockquote>`;
+    }
+    return `<figure class="review-card review-image"><img src="${item.image}" alt="${escapeHtml(item.alt)}" loading="lazy"></figure>`;
   }
 
-  function reviewRow(items, format, reverse = false) {
+  function reviewRow(items) {
     const doubled = [...items, ...items];
-    return `<div class="review-lane${reverse ? " reverse" : ""}" aria-label="${format === "wide" ? "Горизонтальні" : "Вертикальні"} відгуки — перетягуйте мишкою"><div class="marquee-row review-row-${format}">${doubled.map(item => reviewCard(item, format)).join("")}</div></div>`;
+    return `<div class="review-lane" aria-label="Відгуки учнів та батьків — перетягуйте мишкою"><div class="marquee-row">${doubled.map(reviewCard).join("")}</div></div>`;
   }
 
   function renderReviews() {
-    const wide = data.reviews.filter(item => item.format === "wide");
-    const tall = data.reviews.filter(item => item.format !== "wide");
-    const wideTexts = data.textReviews.filter((_, index) => index % 2 === 0);
-    const tallTexts = data.textReviews.filter((_, index) => index % 2 !== 0);
-    $("#reviews-marquee").innerHTML = reviewRow(interleaveReviews(wide, wideTexts, "wide"), "wide") + reviewRow(interleaveReviews(tall, tallTexts, "tall"), "tall", true);
+    $("#reviews-marquee").innerHTML = reviewRow(buildReviewSequence(data.reviews, data.textReviews));
   }
 
   function setupReviewMarquee() {
@@ -77,7 +78,6 @@
     const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
     document.querySelectorAll(".review-lane").forEach(lane => {
       const row = $(".marquee-row", lane);
-      const reverse = lane.classList.contains("reverse");
       let dragging = false;
       let startX = 0;
       let startScroll = 0;
@@ -88,10 +88,9 @@
         const half = halfWidth();
         if (!half) return;
         if (lane.scrollLeft >= half) lane.scrollLeft -= half;
-        if (lane.scrollLeft <= 0 && reverse) lane.scrollLeft = half;
+        if (lane.scrollLeft < 0) lane.scrollLeft += half;
       };
 
-      requestAnimationFrame(() => { if (reverse) lane.scrollLeft = halfWidth(); });
       lane.addEventListener("dragstart", event => event.preventDefault());
       lane.addEventListener("pointerdown", event => {
         if (event.button !== 0) return;
@@ -120,7 +119,7 @@
         const elapsed = Math.min(currentTime - previousTime, 64);
         previousTime = currentTime;
         if (!dragging && desktop.matches && !reducedMotion.matches) {
-          lane.scrollLeft += (reverse ? -1 : 1) * elapsed * .022;
+          lane.scrollLeft += elapsed * .022;
           normalize();
         }
         requestAnimationFrame(animate);
