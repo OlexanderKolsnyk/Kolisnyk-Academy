@@ -92,6 +92,14 @@
       };
 
       lane.addEventListener("dragstart", event => event.preventDefault());
+      lane.addEventListener("wheel", event => {
+        if (!desktop.matches) return;
+        const delta = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
+        if (!delta) return;
+        event.preventDefault();
+        lane.scrollLeft += delta;
+        normalize();
+      }, { passive: false });
       lane.addEventListener("pointerdown", event => {
         if (event.button !== 0) return;
         dragging = true;
