@@ -185,8 +185,9 @@ h1 em, h2 em { display: block; color: var(--peach-dark); font-family: var(--font
 .result-score strong { font-size: 2.45rem; }
 
 .reviews { overflow: hidden; background: #fff; }
-.reviews.section { padding-block: 56px 64px; }
-.reviews-marquee { margin-top: 28px; }
+.reviews.section { padding-block: 38px 44px; }
+.reviews .section-heading { margin-bottom: 0; }
+.reviews-marquee { margin-top: 20px; }
 .review-lane { width: 100%; overflow: hidden; cursor: grab; touch-action: pan-y; scrollbar-width: none; }
 .review-lane::-webkit-scrollbar { display: none; }
 .review-lane.is-dragging { cursor: grabbing; }
@@ -397,7 +398,7 @@ h1 em, h2 em { display: block; color: var(--peach-dark); font-family: var(--font
   .result-placeholder:nth-child(1) { left: 0; width: min(320px, 94%); }
   .result-placeholder:nth-child(2) { top: 170px; right: 0; }
   .result-placeholder:nth-child(3) { width: min(320px, 94%); left: 3%; }
-  .reviews.section { padding-block: 52px 58px; }
+  .reviews.section { padding-block: 40px 46px; }
   .reviews-marquee { padding-inline: 0; }
   .review-lane { overflow-x: auto; padding-inline: 14px; }
   .marquee-row, .review-card { height: 290px; }
