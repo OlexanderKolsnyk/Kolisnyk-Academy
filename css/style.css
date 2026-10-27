@@ -193,14 +193,13 @@ h1 em, h2 em { display: block; color: var(--peach-dark); font-family: var(--font
 .review-lane.is-dragging { cursor: grabbing; }
 .review-lane.is-dragging .review-card { user-select: none; }
 .marquee-row { display: flex; width: max-content; height: 260px; gap: 14px; align-items: stretch; }
-.review-card { box-sizing: border-box; flex: none; height: 260px; margin: 0; padding: 8px; overflow: hidden; border: 1px solid rgba(201,111,90,.2); border-radius: var(--radius-md); background: var(--paper-2); box-shadow: var(--shadow-sm); }
-.review-card.review-image { display: flex; width: max-content; background: rgba(251,218,221,.32); }
-.review-card.review-image img { width: auto; max-width: none; height: 100%; object-fit: contain; border-radius: 12px; pointer-events: none; user-select: none; }
-.review-card.review-text { position: relative; display: flex; flex-direction: column; justify-content: space-between; padding: 17px; }
-.review-card.review-text::before { content: "“"; position: absolute; top: -10px; right: 12px; color: rgba(216,126,105,.23); font-family: Georgia, serif; font-size: 4.2rem; line-height: 1; }
-.review-card.review-text { width: var(--review-width, 340px); background: #fffaf7; }
-.review-card.review-text p { position: relative; margin: 0 0 12px; color: var(--ink-soft); font-size: .78rem; line-height: 1.48; }
-.review-card.review-text cite { color: var(--ink); font-size: .84rem; font-style: normal; font-weight: 850; }
+.review-card { box-sizing: border-box; flex: none; height: 260px; margin: 0; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius-md); background: #fff; }
+.review-card.review-image { display: flex; width: max-content; padding: 0; background: var(--pink); }
+.review-card.review-image img { width: auto; max-width: none; height: 100%; object-fit: contain; pointer-events: none; user-select: none; transition: transform .4s ease; }
+.review-card.review-image:hover img { transform: scale(1.025); }
+.review-card.review-text { width: var(--review-width, 340px); display: flex; flex-direction: column; padding: 22px; }
+.review-card.review-text p { margin: 0; color: var(--ink-soft); font-size: .8rem; line-height: 1.5; }
+.review-card.review-text cite { order: -1; margin-bottom: 14px; color: var(--peach-dark); font-size: .72rem; font-style: normal; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
 
 .free { background: #fff7f4; }
 .free-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
