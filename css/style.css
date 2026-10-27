@@ -185,23 +185,25 @@ h1 em, h2 em { display: block; color: var(--peach-dark); font-family: var(--font
 .result-score strong { font-size: 2.45rem; }
 
 .reviews { overflow: hidden; background: #fff; }
-.reviews-marquee { display: grid; gap: 16px; }
-.marquee-row { display: flex; width: max-content; gap: 16px; align-items: center; animation: marquee 70s linear infinite; }
-.marquee-row.reverse { animation-direction: reverse; animation-duration: 82s; transform: translateX(-15%); }
-.reviews-marquee:hover .marquee-row { animation-play-state: paused; }
+.reviews.section { padding-block: 72px; }
+.reviews-marquee { display: grid; gap: 12px; }
+.review-lane { width: 100%; overflow: hidden; cursor: grab; touch-action: pan-y; scrollbar-width: none; }
+.review-lane::-webkit-scrollbar { display: none; }
+.review-lane.is-dragging { cursor: grabbing; }
+.review-lane.is-dragging .review-card { user-select: none; }
+.marquee-row { display: flex; width: max-content; gap: 12px; align-items: center; }
 .review-card { flex: none; margin: 0; padding: 8px; overflow: hidden; border: 1px solid rgba(201,111,90,.2); border-radius: var(--radius-md); background: var(--paper-2); box-shadow: var(--shadow-sm); }
-.review-card.review-tall { width: 230px; transform: rotate(-.25deg); }
-.review-card.review-wide { width: 520px; background: rgba(251,218,221,.46); transform: rotate(.25deg); }
-.review-card img { width: 100%; height: auto; border-radius: 15px; }
-.review-card.review-text { position: relative; display: flex; flex-direction: column; justify-content: space-between; padding: 24px; }
-.review-card.review-text::before { content: "“"; position: absolute; top: -14px; right: 16px; color: rgba(216,126,105,.23); font-family: Georgia, serif; font-size: 6rem; line-height: 1; }
-.review-card.review-text p { position: relative; margin: 0 0 18px; color: var(--ink-soft); font-size: .88rem; line-height: 1.6; }
-.review-card.review-text cite { color: var(--ink); font-style: normal; font-weight: 850; }
-.review-card.review-wide.review-text { min-height: 215px; }
-.review-card.review-tall.review-text { min-height: 410px; background: #fffaf7; }
-.review-row-wide { min-height: 120px; }
+.review-card.review-tall { width: 161px; transform: rotate(-.25deg); }
+.review-card.review-wide { width: 364px; background: rgba(251,218,221,.46); transform: rotate(.25deg); }
+.review-card img { width: 100%; height: auto; border-radius: 12px; pointer-events: none; user-select: none; }
+.review-card.review-text { position: relative; display: flex; flex-direction: column; justify-content: space-between; padding: 17px; }
+.review-card.review-text::before { content: "“"; position: absolute; top: -10px; right: 12px; color: rgba(216,126,105,.23); font-family: Georgia, serif; font-size: 4.2rem; line-height: 1; }
+.review-card.review-text p { position: relative; margin: 0 0 12px; color: var(--ink-soft); font-size: .78rem; line-height: 1.5; }
+.review-card.review-text cite { color: var(--ink); font-size: .84rem; font-style: normal; font-weight: 850; }
+.review-card.review-wide.review-text { min-height: 151px; }
+.review-card.review-tall.review-text { min-height: 287px; background: #fffaf7; }
+.review-row-wide { min-height: 84px; }
 .review-row-tall { align-items: flex-start; }
-@keyframes marquee { to { transform: translateX(-50%); } }
 
 .free { background: #fff7f4; }
 .free-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
@@ -399,8 +401,9 @@ h1 em, h2 em { display: block; color: var(--peach-dark); font-family: var(--font
   .result-placeholder:nth-child(1) { left: 0; width: min(320px, 94%); }
   .result-placeholder:nth-child(2) { top: 170px; right: 0; }
   .result-placeholder:nth-child(3) { width: min(320px, 94%); left: 3%; }
-  .reviews-marquee { overflow-x: auto; padding-inline: 14px; }
-  .marquee-row, .marquee-row.reverse { animation: none; transform: none; }
+  .reviews.section { padding-block: 64px; }
+  .reviews-marquee { padding-inline: 0; }
+  .review-lane { overflow-x: auto; padding-inline: 14px; }
   .review-card.review-tall { width: 210px; }
   .review-card.review-wide { width: 420px; }
   .review-card.review-wide.review-text { min-height: 205px; }
@@ -441,5 +444,5 @@ h1 em, h2 em { display: block; color: var(--peach-dark); font-family: var(--font
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
-  .marquee-row, .marquee-row.reverse { animation: none; transform: none; }
+  .review-lane { scroll-behavior: auto; }
 }

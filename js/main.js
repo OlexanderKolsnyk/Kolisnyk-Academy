@@ -6,6 +6,7 @@
   window.addEventListener("pageshow", () => requestAnimationFrame(() => window.scrollTo(0, 0)));
 
   const data = window.SITE_DATA;
+  const teachers = [...data.teachers].reverse();
   const $ = (selector, scope = document) => scope.querySelector(selector);
   const escapeHtml = (value) => String(value).replace(/[&<>'"]/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" }[char]));
   const icons = {
@@ -33,10 +34,10 @@
   }
 
   function renderTeachers() {
-    $("#teachers-list").innerHTML = data.teachers.map((teacher, index) => `
+    $("#teachers-list").innerHTML = teachers.map((teacher, index) => `
       <article class="teacher-card"><div class="teacher-photo"><img src="${teacher.image}" alt="${escapeHtml(teacher.name)} — ${escapeHtml(teacher.subject)}" width="853" height="1280" loading="lazy"></div><div class="teacher-info"><span class="teacher-tag">${escapeHtml(teacher.subject)}</span><h3>${escapeHtml(teacher.name)}</h3><p>${escapeHtml(teacher.trait)}</p><button class="teacher-select" type="button" data-teacher-index="${index}">Хочу заняття →</button></div></article>`).join("");
     const select = $("#selected-teacher");
-    data.teachers.forEach(teacher => select.add(new Option(`${teacher.name} — ${teacher.subject}`, teacher.name)));
+    teachers.forEach(teacher => select.add(new Option(`${teacher.name} — ${teacher.subject}`, teacher.name)));
   }
 
   function renderLessons() {
@@ -60,7 +61,7 @@
 
   function reviewRow(items, format, reverse = false) {
     const doubled = [...items, ...items];
-    return `<div class="marquee-row review-row-${format}${reverse ? " reverse" : ""}">${doubled.map(item => reviewCard(item, format)).join("")}</div>`;
+    return `<div class="review-lane${reverse ? " reverse" : ""}" aria-label="${format === "wide" ? "Горизонтальні" : "Вертикальні"} відгуки — перетягуйте мишкою"><div class="marquee-row review-row-${format}">${doubled.map(item => reviewCard(item, format)).join("")}</div></div>`;
   }
 
   function renderReviews() {
@@ -69,6 +70,63 @@
     const wideTexts = data.textReviews.filter((_, index) => index % 2 === 0);
     const tallTexts = data.textReviews.filter((_, index) => index % 2 !== 0);
     $("#reviews-marquee").innerHTML = reviewRow(interleaveReviews(wide, wideTexts, "wide"), "wide") + reviewRow(interleaveReviews(tall, tallTexts, "tall"), "tall", true);
+  }
+
+  function setupReviewMarquee() {
+    const desktop = matchMedia("(min-width: 721px)");
+    const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
+    document.querySelectorAll(".review-lane").forEach(lane => {
+      const row = $(".marquee-row", lane);
+      const reverse = lane.classList.contains("reverse");
+      let dragging = false;
+      let startX = 0;
+      let startScroll = 0;
+      let previousTime = performance.now();
+
+      const halfWidth = () => row.scrollWidth / 2;
+      const normalize = () => {
+        const half = halfWidth();
+        if (!half) return;
+        if (lane.scrollLeft >= half) lane.scrollLeft -= half;
+        if (lane.scrollLeft <= 0 && reverse) lane.scrollLeft = half;
+      };
+
+      requestAnimationFrame(() => { if (reverse) lane.scrollLeft = halfWidth(); });
+      lane.addEventListener("dragstart", event => event.preventDefault());
+      lane.addEventListener("pointerdown", event => {
+        if (event.button !== 0) return;
+        dragging = true;
+        startX = event.clientX;
+        startScroll = lane.scrollLeft;
+        lane.classList.add("is-dragging");
+        lane.setPointerCapture(event.pointerId);
+      });
+      lane.addEventListener("pointermove", event => {
+        if (!dragging) return;
+        event.preventDefault();
+        lane.scrollLeft = startScroll - (event.clientX - startX);
+        normalize();
+      });
+      const finishDrag = event => {
+        if (!dragging) return;
+        dragging = false;
+        lane.classList.remove("is-dragging");
+        if (lane.hasPointerCapture(event.pointerId)) lane.releasePointerCapture(event.pointerId);
+      };
+      lane.addEventListener("pointerup", finishDrag);
+      lane.addEventListener("pointercancel", finishDrag);
+
+      const animate = currentTime => {
+        const elapsed = Math.min(currentTime - previousTime, 64);
+        previousTime = currentTime;
+        if (!dragging && desktop.matches && !reducedMotion.matches) {
+          lane.scrollLeft += (reverse ? -1 : 1) * elapsed * .022;
+          normalize();
+        }
+        requestAnimationFrame(animate);
+      };
+      requestAnimationFrame(animate);
+    });
   }
 
   function renderFree() {
@@ -128,7 +186,7 @@
     document.addEventListener("click", event => {
       const teacherButton = event.target.closest(".teacher-select");
       if (teacherButton) {
-        const teacher = data.teachers[Number(teacherButton.dataset.teacherIndex)];
+        const teacher = teachers[Number(teacherButton.dataset.teacherIndex)];
         $("#selected-teacher").value = teacher.name;
         $(".preferences").open = true;
         sessionStorage.setItem("ka_cta_location", `teacher-${teacher.name}`);
@@ -144,6 +202,6 @@
   }
 
   renderLinks(); renderTeachers(); renderLessons(); renderReviews(); renderFree(); renderPrices(); renderFaq();
-  setupMenu(); setupTopLinks(); setupFaq(); setupSelections();
+  setupMenu(); setupTopLinks(); setupFaq(); setupSelections(); setupReviewMarquee();
   $("#current-year").textContent = new Date().getFullYear();
 })();
